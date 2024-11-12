@@ -1,5 +1,7 @@
 # MySQL高级
 
+[TOC]
+
 ## 1、存储引擎
 
 ### 1.1、MySQL体系结构
@@ -53,7 +55,7 @@ create table my_myisam(
 
 ### 1.3、存储引擎特点
 
-#### 1.3.1、**InnoDB**
+#### 1.3.1、InnoDB
 
 - **介绍**
   - InnoDB 是一种兼顾高可靠性和高性能的通用存储引擎，在 MySQL 5.5 之后，InnoDB 是默认的 MySQL 存储引擎。
@@ -79,7 +81,7 @@ create table my_myisam(
 
 ![image-20241111225207065](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411112252120.png)
 
-#### 1.3.2、**MyISAM**
+#### 1.3.2、MyISAM
 
 - **介绍**
   - MyISAM 是 MySQL 早期的默认存储引擎。
@@ -100,9 +102,10 @@ create table my_myisam(
 
   - .MYI 存储索引
 
-#### 1.3.3、**Memory**
+#### 1.3.3、Memory
 
 - **介绍**
+
   - Memory 引擎的表数据是存储在内存中的，由于收到硬件问题、或断电问题的影响，只能将这些表作为临时表或缓存使用。
 
 - **特点**
@@ -1094,7 +1097,7 @@ create or replace view stu_v_1 as select id,name from student where id<=10 with 
 
 `CASCADED` 和 `LOCAL` ，默认值为 `CASCADED` 。
 
-##### 4.1.6.1、**CASCADED：**
+##### 4.1.6.1、CASCADED
 
 不加检查选项：
 
@@ -1148,7 +1151,7 @@ insert into stu_v_2 values(17,'Tom');
 insert into stu_v_2 values(28,'Tom');
 ```
 
-##### 4.1.6.2、**LOCAL**
+##### 4.1.6.2、LOCAL
 
 不加检查选项：
 
@@ -1198,7 +1201,7 @@ insert into stu_v_5 values(14,'Tom');
 
 
 
-#### **4.1.7、总结**
+#### 4.1.7、总结
 
 下面归纳的是创建一个关联视图即视图 `2` 依赖于视图 `1` 的情况：
 
@@ -1219,42 +1222,42 @@ insert into stu_v_5 values(14,'Tom');
 
 ##### 4.1.7.2、作用
 
-*   **简单**
-    
-    视图不仅可以简化用户对数据的理解，也可以简化他们的操作。那些被经常使用的查询可以被定义为视图，从而使得用户不必为以后的操作每次都指定全部的条件。
-    
-*   **安全**
-    
-    数据库可以授权，但不能授权到数据库特定行和特定的列上。通过视图用户只能查询和修改他们所能见到的数据。
-    
-*   **数据独立**
-    
-    视图可以帮助用户屏蔽真实表结构变化带来的影响。
-    
+* **简单**
+
+  视图不仅可以简化用户对数据的理解，也可以简化他们的操作。那些被经常使用的查询可以被定义为视图，从而使得用户不必为以后的操作每次都指定全部的条件。
+
+* **安全**
+
+  数据库可以授权，但不能授权到数据库特定行和特定的列上。通过视图用户只能查询和修改他们所能见到的数据。
+
+* **数据独立**
+
+  视图可以帮助用户屏蔽真实表结构变化带来的影响。
 
 ##### 4.1.7.3、案例
 
 根据如果需求，定义视图：
 
-1.  为了保证数据库的安全性，开发人员在操作 `tb_user` 表时，只能看到用户的基本字段，屏蔽手机号和邮箱两个字段。
-2.  查询每个学生所选修的课程（三张表联查），这个功能在很多的业务中都有使用到，为了简化操作，定义一个视图。
+1. 为了保证数据库的安全性，开发人员在操作 `tb_user` 表时，只能看到用户的基本字段，屏蔽手机号和邮箱两个字段。
 
-    ```mysql
-    -- 需求1
-    create view tb_user_view as select id,name,profession,age,gender,status,createtime from tb_user;
-    
-    select * from tb_user_view;
-    
-    -- 需求2
-    # 三表联查
-    # select s.name,s.no,c.name from student s,student_course sc,course c where s.id=sc.student_id and sc.courseid=c.id;
-    
-    # 将上面的语句接到视图创建的语句之后即可
-    # 下面给s.name和s.no和c.name取了别名，不取就会报错，因为在s表和c表中都有name这个标题，不取别名会出现重复标题
-    create view tb_stu_course_view as select s.name student_name,s.no student_no,c.name course_name from student s,student_course sc,course c where s.id=sc.student_id and sc.courseid=c.id;
-    ```
-    
-    
+2. 查询每个学生所选修的课程（三张表联查），这个功能在很多的业务中都有使用到，为了简化操作，定义一个视图。
+
+   ```mysql
+   -- 需求1
+   create view tb_user_view as select id,name,profession,age,gender,status,createtime from tb_user;
+   
+   select * from tb_user_view;
+   
+   -- 需求2
+   # 三表联查
+   # select s.name,s.no,c.name from student s,student_course sc,course c where s.id=sc.student_id and sc.courseid=c.id;
+   
+   # 将上面的语句接到视图创建的语句之后即可
+   # 下面给s.name和s.no和c.name取了别名，不取就会报错，因为在s表和c表中都有name这个标题，不取别名会出现重复标题
+   create view tb_stu_course_view as select s.name student_name,s.no student_no,c.name course_name from student s,student_course sc,course c where s.id=sc.student_id and sc.courseid=c.id;
+   ```
+
+   
 
 ### 4.2、 存储过程
 
@@ -1467,30 +1470,32 @@ END IF;
 
 根据定义的分数 `score` 变量，判定当前分数对应的分数等级。
 
-1.  score >= 85 分，等级为优秀
-2.  score >= 60 分且 score < 85 分，等级为及格。
-3.  score < 60 分，等级为不及格。
+1. score >= 85 分，等级为优秀
 
-    ```mysql
-    create procedure p()
-    begin
-    	declare score int default 58;
-    	declare result varchar(10);
-    	
-    	if score >= 85 then
-    		set result := '优秀';
-    	elseif score >= 60 then
-    		set result := '及格';
-    	else
-    		set result := '不及格';
-    	end if;
-    	select result;
-    end;
-    
-    call p();
-    ```
-    
-    
+2. score >= 60 分且 score < 85 分，等级为及格。
+
+3. score < 60 分，等级为不及格。
+
+   ```mysql
+   create procedure p()
+   begin
+   	declare score int default 58;
+   	declare result varchar(10);
+   	
+   	if score >= 85 then
+   		set result := '优秀';
+   	elseif score >= 60 then
+   		set result := '及格';
+   	else
+   		set result := '不及格';
+   	end if;
+   	select result;
+   end;
+   
+   call p();
+   ```
+
+   
 
 #### 4.2.8、参数
 
@@ -1580,34 +1585,37 @@ END CASE;
 
 根据传入的月份，判定月份所属的季节（需求采用 `case` 结构）。
 
-1.  1-3 月份，为第一季度
-2.  4-6 月份，为第二季度
-3.  7-9 月份，为第三季度
-4.  10-12 月份，为第四季度
+1. 1-3 月份，为第一季度
 
-    ```mysql
-    create procedure p(in month int)
-    begin
-    	declare result varchar(10);
-    	
-    	case
-    		when month >= 1 and month <= 3 then
-    			set result := '第一季度';
-    		when month >= 4 and month <= 6 then
-    			set result := '第二季度';
-    		when month >= 7 and month <= 9 then
-    			set result := '第三季度';
-    		when month >= 10 and month <= 12 then
-    			set result := '第四季度';
-    		else
-    			set result := '非法参数';
-    	end case;
-    	
-    	select concat('您输入的月份为：',month,'，所属的季度为：',result);
-    end;
-    
-    call p(4);
-    ```
+2. 4-6 月份，为第二季度
+
+3. 7-9 月份，为第三季度
+
+4. 10-12 月份，为第四季度
+
+   ```mysql
+   create procedure p(in month int)
+   begin
+   	declare result varchar(10);
+   	
+   	case
+   		when month >= 1 and month <= 3 then
+   			set result := '第一季度';
+   		when month >= 4 and month <= 6 then
+   			set result := '第二季度';
+   		when month >= 7 and month <= 9 then
+   			set result := '第三季度';
+   		when month >= 10 and month <= 12 then
+   			set result := '第四季度';
+   		else
+   			set result := '非法参数';
+   	end case;
+   	
+   	select concat('您输入的月份为：',month,'，所属的季度为：',result);
+   end;
+   
+   call p(4);
+   ```
 
 
 
@@ -1685,17 +1693,17 @@ call p(10);
 
 `LOOP` 实现简单的循环，如果不在 `SQL` 逻辑中增加退出循环的条件，可以用来其来实现简单的死循环。`LOOP` 可以配合一下两个语句使用：
 
-*   `LEAVE` ：配合循环使用，退出循环。
-*   `ITERATE` ：必须用在循环中，作用是跳过当前循环剩下的语句，直接进入下一次循环。
+* `LEAVE` ：配合循环使用，退出循环。
 
-    [begin_label:] LOOP
-    	SQL逻辑...
-    END LOOP [end_label];
-    
+* `ITERATE` ：必须用在循环中，作用是跳过当前循环剩下的语句，直接进入下一次循环。
 
-    LEAVE label;	-- 退出指定标记的循环体
-    ITERATE label;	-- 直接进入下一次循环
-    
+  [begin_label:] LOOP
+  	SQL逻辑...
+  END LOOP [end_label];
+
+
+  LEAVE label;	-- 退出指定标记的循环体
+  ITERATE label;	-- 直接进入下一次循环
 
 **案例**
 
@@ -1721,34 +1729,34 @@ call p(10);
    call p(10);
    ```
 
-1.  计算从 `1` 到 `n` 之间的偶数累加的值，`n` 为传入的参数值。
+1. 计算从 `1` 到 `n` 之间的偶数累加的值，`n` 为传入的参数值。
 
-    ```mysql
-    create procedure p(in n int)
-    begin
-    	declare total int default 0;
-    	
-    	sum:loop
-    		if n <= 0 then
-    			leave sum;
-    		end if;
-    		
-    		if n % 2 = 1 then
-    			set n := n - 1;
-    			iterate sum;
-    		end if;
-    		
-    		set total := total + n;
-    		set n := n - 1;
-    	end loop sum;
-    	
-    	select total;
-    end;
-    
-    call p(10);
-    ```
-    
-    
+   ```mysql
+   create procedure p(in n int)
+   begin
+   	declare total int default 0;
+   	
+   	sum:loop
+   		if n <= 0 then
+   			leave sum;
+   		end if;
+   		
+   		if n % 2 = 1 then
+   			set n := n - 1;
+   			iterate sum;
+   		end if;
+   		
+   		set total := total + n;
+   		set n := n - 1;
+   	end loop sum;
+   	
+   	select total;
+   end;
+   
+   call p(10);
+   ```
+
+   
 
 #### 4.2.13、游标
 
@@ -1846,40 +1854,45 @@ condition_value
 
 逻辑：
 
-1.  声明游标，存储查询结果集
-2.  准备：创建表结构
-3.  开启游标
-4.  获取游标中的记录
-5.  插入数据到新表中
-6.  关闭游标
+1. 声明游标，存储查询结果集
 
-    ```mysql
-    create procedure p(in uage int)
-    begin
-    	-- 需要先声明普通变量，再声明游标，不然会报错
-    	declare uname varchar(100);
-    	declare upro varchar(100);
-    	declare u_cursor cursor for select name,profession from tb_user where age < = uage;
-    	declare exit handler for SQLSTATE '02000' close u_cursor;
-    	
-    	drop table if exists tb_user_pro;
-    	create table if not exists tb_user_pro(
-        	id int primary key auto_increment,
-            name varchar(100),
-            profession varchar(100)
-        );
-        
-        open u_cursor;
-        while true do
-        	fetch u_cursor into uname,upro;
-        	insert into tb_user_pro values (null, uname, upro);
-        end while;
-        close u_cursor;
-        
-    end;
-    
-    call p(40);
-    ```
+2. 准备：创建表结构
+
+3. 开启游标
+
+4. 获取游标中的记录
+
+5. 插入数据到新表中
+
+6. 关闭游标
+
+   ```mysql
+   create procedure p(in uage int)
+   begin
+   	-- 需要先声明普通变量，再声明游标，不然会报错
+   	declare uname varchar(100);
+   	declare upro varchar(100);
+   	declare u_cursor cursor for select name,profession from tb_user where age < = uage;
+   	declare exit handler for SQLSTATE '02000' close u_cursor;
+   	
+   	drop table if exists tb_user_pro;
+   	create table if not exists tb_user_pro(
+       	id int primary key auto_increment,
+           name varchar(100),
+           profession varchar(100)
+       );
+       
+       open u_cursor;
+       while true do
+       	fetch u_cursor into uname,upro;
+       	insert into tb_user_pro values (null, uname, upro);
+       end while;
+       close u_cursor;
+       
+   end;
+   
+   call p(40);
+   ```
 
 
 
@@ -1942,7 +1955,7 @@ select fun1(50);
 
 
 
-#### 4.4.1、**创建**
+#### 4.4.1、创建
 
 ```mysql
 CREATE TRIGGER trigger_name
@@ -1962,7 +1975,7 @@ SHOW TRIGGERS;
 
 
 
-#### 4.4.2、**删除**
+#### 4.4.2、删除
 
 ```mysql
 DROP TRIGGER [schema_name.]trigger_name;	--如果没有指定schema_name，默认为当前数据库
@@ -1987,7 +2000,7 @@ create table user_logs(
 
 
 
-#### 4.4.3、**`INSERT` 类型触发器：**
+#### 4.4.3、INSERT类型触发器：
 
 **案例1**
 
@@ -2054,7 +2067,7 @@ drop trigger tb_user_insert_trigger;
 
 
 
-#### 4.4.4、**`UPDATE` 类型触发器：**
+#### 4.4.4、UPDATE 类型触发器：
 
 **案例1**
 
@@ -2115,7 +2128,7 @@ update tb_user set age = 32 where id = 23;
 
 
 
-#### 4.4.5、**`DELETE` 类型触发器：**
+#### 4.4.5、DELETE类型触发器：
 
 **案例1**
 
@@ -2276,13 +2289,13 @@ mysqldump --single-transaction -uroot -p123456 itcast > itcast.sql
    lock tables 表名... read/write
    ```
 
-2.  释放锁
+2. 释放锁
 
-    ```mysql
-    unlock tables / 客户端断开连接
-    ```
-    
-    
+   ```mysql
+   unlock tables / 客户端断开连接
+   ```
+
+   
 
 #### 5.3.3、元数据锁
 
@@ -2400,7 +2413,7 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 
 ![image-20241112215541336](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411122155609.png)
 
-#### 6.2.1、**内存结构**
+#### 6.2.1、内存结构
 
 ![image-20241112215550856](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411122155112.png)
 
@@ -2410,7 +2423,7 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 
 ![image-20241112215633314](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411122156586.png)
 
-#### 6.2.2、**磁盘结构**
+#### 6.2.2、磁盘结构
 
 ![image-20241112215642569](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411122156855.png)
 
@@ -2418,7 +2431,7 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 
 ![image-20241112215702489](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411122157750.png)
 
-#### 6.2.3、**后台线程**
+#### 6.2.3、后台线程
 
 ![image-20241112215711216](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411122157474.png)
 
@@ -2426,13 +2439,13 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 
 ### 6.3、事务原理
 
-#### 6.3.1、**事务**
+#### 6.3.1、事务
 
 事务是一组操作的集合，它是一个不可分割的工作单位，事务会把所有的操作作为一个整体一起向系统提交或撤销操作请求，即这些操作要么同时成功，要么同时失败。
 
 
 
-#### 6.3.2、ACID**特性**
+#### 6.3.2、ACID特性
 
 *   原子性：事务是不可分割的最小操作单元，要么全部成功，要么全部失败。
 *   一致性：事务完成时，必须使所有的数据都保持一致状态。
@@ -2451,7 +2464,7 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 
 ![image-20241112215727490](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411122157752.png)
 
-#### 6.3.4、**undo log（原子性）**
+#### 6.3.4、undo log（原子性）
 
 回滚日志，用于记录数据被修改前的信息，作用包含两个：提供回滚和 `MVCC`（多版本并发控制）。
 
@@ -2465,25 +2478,25 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 
 ### 6.4、MVCC
 
-#### 6.4.1、**基本概念**
+#### 6.4.1、基本概念
 
-*   当前读
-    
-    读取的是记录的最新版本，读取时还要保证其他并发事务不能修改当前记录，会对读取的记录进行加锁。对于我们日常的操作，如：`select ... lock in share mode`（共享锁），`select ... for update、update、insert、delete`（排他锁）都是一种当前读。
-    
-*   快照读
-    
-    简单的 `select`（不加锁）就是快照读，读取的是记录数据的可见版本，有可能是历史数据，不加锁，是非阻塞读。
-    
-    *   `Read Committed` ：每次 `select` ，都生成一个快照读。
-    *   `Repeatable Read` ：开启事务后第一个 `select` 语句才是快照读的地方。
-    *   `Serializable` ：快照读会退化成当前读。
-*   `MVCC`
-    
-    全称 `Multi-Version Concurrency Control` ，多版本并发控制。指维护一个数据的多版本，使得读写操作没有冲突，快照读为 `MySQL` 实现 `MVCC` 提供了一个非阻塞读功能。`MVCC` 的具体实现，还需要依赖于数据库记录中的三个隐式字段、`undo log` 日志和 `readView` 。
-    
+* 当前读
 
-#### 6.4.2、**实现原理**
+  读取的是记录的最新版本，读取时还要保证其他并发事务不能修改当前记录，会对读取的记录进行加锁。对于我们日常的操作，如：`select ... lock in share mode`（共享锁），`select ... for update、update、insert、delete`（排他锁）都是一种当前读。
+
+* 快照读
+
+  简单的 `select`（不加锁）就是快照读，读取的是记录数据的可见版本，有可能是历史数据，不加锁，是非阻塞读。
+
+  *   `Read Committed` ：每次 `select` ，都生成一个快照读。
+  *   `Repeatable Read` ：开启事务后第一个 `select` 语句才是快照读的地方。
+  *   `Serializable` ：快照读会退化成当前读。
+
+* `MVCC`
+
+  全称 `Multi-Version Concurrency Control` ，多版本并发控制。指维护一个数据的多版本，使得读写操作没有冲突，快照读为 `MySQL` 实现 `MVCC` 提供了一个非阻塞读功能。`MVCC` 的具体实现，还需要依赖于数据库记录中的三个隐式字段、`undo log` 日志和 `readView` 。
+
+#### 6.4.2、实现原理
 
 ##### 6.4.2.1、记录中的隐藏字段
 
@@ -2563,7 +2576,7 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 
 ### 7.2、常用工具
 
-#### 7.2.1、**MySQL**
+#### 7.2.1、MySQL
 
 该 `MySQL` 不是指 `MySQL` 服务，而是指 `MySQL` 的客户端工具。
 
@@ -2614,7 +2627,7 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 	--start-postion=pos1 --stop-postion=pos2		#指定位置间隔内的所有日志
 ```
 
-#### 7.2.4、**mysqlshow**
+#### 7.2.4、mysqlshow
 
 `mysqlshow` 客户端对象查找工具，用来很快地查找存在哪些数据库、数据库中的表、表中的列或索引。
 
@@ -2635,7 +2648,7 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 	mysqlshow -uroot -p2143 test book --count
 ```
 
-#### **7.2.5、mysqldump**
+#### 7.2.5、mysqldump
 
 `mysqldump` 客户端工具用来备份数据库或在不同数据库之间进行数据迁移。备份内容包含创建表，及插入表的 `SQL` 语句。
 
@@ -2658,7 +2671,7 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 	-T, --tab=name			#自动生成两个文件：一个.sql文件，创建表结构的语句；一个.txt文件，数据文件
 ```
 
-#### 7.2.6、**mysqlimport/souce**
+#### 7.2.6、mysqlimport/souce
 
 `mysqlimport` 是客户端数据导入工具，用来导入 `mysqldump` 加 `-T` 参数后导出的文本文件。
 
