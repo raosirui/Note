@@ -996,7 +996,6 @@ hm:
 代码如下：
 
 ```Java
-
 @Data
 @Component
 @ConfigurationProperties(prefix = "hm.cart")
@@ -1991,8 +1990,8 @@ Seata对原始的XA模式做了简单的封装和改造，以适应自己的事�
 `TC`二阶段的工作：
 
 1.  `TC`检测各分支事务执行状态
-   1. 如果都成功，通知所有RM提交事务
-   2. 如果有失败，通知所有RM回滚事务 
+    1. 如果都成功，通知所有RM提交事务
+    2. 如果有失败，通知所有RM回滚事务 
 
 `RM`二阶段的工作：
 
@@ -2624,7 +2623,7 @@ rabbitTemplate.convertAndSend(exchangeName, "china.news", message);
 
 Spring的消息发送代码接收的消息体是一个Object：
 
-![img](https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=NWJkMWUyMzk4MTdkMmI4MjA2YWE5YjdlMmY2MWQyYTVfWUNqd3VWVERWNlFOMHFGdXFUZ2QyM3B6R05qZllrSkJfVG9rZW46QUVEb2IwZ1hOb3piR1R4V2JYR2NlUVYzbkFmXzE3MzA1MTYyMzU6MTczMDUxOTgzNV9WNA)
+![image-20241115180421039](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151804467.png)
 
 而在数据传输时，它会把你发送的消息序列化为字节发送给MQ，接收消息的时候，还会把字节反序列化为Java对象。
 
@@ -2667,7 +2666,7 @@ public MessageConverter messageConverter(){
 
 此时，我们到MQ控制台**删除**`object.queue`中的旧的消息。然后再次执行刚才的消息发送的代码，到MQ的控制台查看消息结构：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=NTQzM2I2ODM0YjQ0MWU4YWY1MDhjNjBhNzBiOThlMGNfYTdhVmJrcXdDeDdsSVZyd3BOY1RteTFwMzI5ekt0aTJfVG9rZW46QUVoaGIzMEtvb3NZSFJ4dUFRSWNIWFVTbkxoXzE3MzA1MTYyNjc6MTczMDUxOTg2N19WNA" alt="img" style="zoom:50%;" />
+![image-20241115180447644](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151804212.png)
 
 ##### 7.3.4.2、消费者接收Object
 
@@ -2764,7 +2763,7 @@ spring:
 
 具体如图所示：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MjlmMWU3NTA3ZWEwNzcxNTU2ZjAxY2M2ODViMTUxY2JfMkxCSEptZ200cEhaVXpSZlQza0VZOGNOTDlWTVd2UUZfVG9rZW46Vm9oUWJZd1NsbzhSNkF4ZmluR2NMTnE2bmxkXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180521574](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151805014.png)
 
 总结如下：
 
@@ -2802,7 +2801,7 @@ spring:
 
 每个`RabbitTemplate`只能配置一个`ReturnCallback`，因此我们可以在配置类中统一设置。我们在publisher模块定义一个配置类：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MTBhNzIzYzA0MzRlZTg5ZDE1YjBjNzE2NGE5NWIwMjFfbUhYRWV1MlNwWjV3Z3BHVWhnTGRuTnZtZEFndHd2VXFfVG9rZW46VnRMTGIwZFNGbzZYT2R4MUVFaWN6VnZibnZjXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180531335](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151805671.png)
 
 内容如下：
 
@@ -2834,7 +2833,7 @@ public class MqConfig {
 
 由于每个消息发送时的处理逻辑不一定相同，因此ConfirmCallback需要在每次发消息时定义。具体来说，是在调用RabbitTemplate中的convertAndSend方法时，多传递一个参数：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=ZmM2YmI2YTQ1ZDE0MzRmNGJhYjA0ZjA1ZDhjODM0ZjNfeG52azdQV3d4Q0VHVG9ONUQzeEN6ZVN1c2VaOGt4U1ZfVG9rZW46RTJJY2JROWJRb0NEVFZ4OG04R2NpaWZYbktlXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180540566](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151805848.png)
 
 这里的CorrelationData中包含两个核心的东西：
 
@@ -2843,7 +2842,7 @@ public class MqConfig {
 
 将来MQ的回执就会通过这个`Future`来返回，我们可以提前给`CorrelationData`中的`Future`添加回调函数来处理消息回执：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=ZTE5MTdkNDM5NDU2NDQ4MWQwYTBhMzUxMDNkN2FiYjRfVnlrU3Z2SzE2cVpxRXY4eVZ1aXZtODZYZGdmRkxoNXZfVG9rZW46VFI4MWJGOEUzb2NtNzJ4a2FxSGN1TjlObnBoXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180547764](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151805066.png)
 
 我们新建一个测试，向系统自带的交换机发送消息，并且添加`ConfirmCallback`：
 
@@ -2876,7 +2875,7 @@ void testPublisherConfirm() {
 
 执行结果如下：
 
-![img](https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=NDllMDBjYjFmYTZhYTJhMzY1ZDY5M2E2ZGZmOWE3NGJfMkdzekVwdnlsQzJ1OHFtMUNFc0lVWnlqSVc4dUhoWFdfVG9rZW46WW1GMmJvOEM4b3Q3Q2V4WlhvcGNzSXlUblljXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA)
+![image-20241115180557165](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151805489.png)
 
 可以看到，由于传递的`RoutingKey`是错误的，路由失败后，触发了`return callback`，同时也收到了ack。
 
@@ -2912,7 +2911,7 @@ void testPublisherConfirm() {
 
 在控制台的`Exchanges`页面，添加交换机时可以配置交换机的`Durability`参数：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=YmI4ZTBmMmM3NzczYzcwZDkwM2RjZjI1ZjUzOTYyNDBfaXZUOVluTlJKbXNhYklEb2dLSzFtVlBNS05WNTBZRlFfVG9rZW46TlByOGJjVXFrb05WZ0l4UDdlUGN0NnRobjRnXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180606484](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151806791.png)
 
 设置为`Durable`就是持久化模式，`Transient`就是临时模式。
 
@@ -2920,7 +2919,7 @@ void testPublisherConfirm() {
 
 在控制台的Queues页面，添加队列时，同样可以配置队列的`Durability`参数：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=ZGI5M2Y4MWI3NzBhYzdmODBhZjdiODQ4M2FiODY1MWNfaXp5UWh5UGJ1Wnh0R1dOZENITjZrUTRiQ3BDbUlUTVNfVG9rZW46Q3hyeGJQM2F3b3R4bWt4U25kbGNFN2lLbnZkXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180617957](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151806232.png)
 
 除了持久化以外，你可以看到队列还有很多其它参数，有一些我们会在后期学习。
 
@@ -2928,7 +2927,7 @@ void testPublisherConfirm() {
 
 在控制台发送消息的时候，可以添加很多参数，而消息的持久化是要配置一个`properties`：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MDJkM2VjMzU1MjFlZDc4OWY2MTkwZDA3MmNjYTQzMDVfWFh2RlJobVk2aWlPWENIYlpiSzFKUDhWcVh1T0FkWTJfVG9rZW46VW9vemJRN1c0b2FiczJ4bGFEamNUd1dabkxmXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180626037](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151806333.png)
 
 **说明**：在开启持久化机制以后，如果同时还开启了生产者确认，那么MQ会在消息持久化以后才发送ACK回执，进一步确保消息的可靠性。
 
@@ -2956,7 +2955,7 @@ void testPublisherConfirm() {
 
 在添加队列的时候，添加`x-queue-mod=lazy`参数即可设置队列为Lazy模式：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=YzM0ODljMDZhMzcwOTExOTM3OWM4NGU3YTI1NmViOGRfZVR5MWFpeVBTRmNzazBrUndlZ1FpNURsZ1JPaklqTWFfVG9rZW46RDdtbWJ6VnlTb2EwVnp4VFE2VWNicGwybktiXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180635822](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151806123.png)
 
 ###### 7.4.2.2.2、代码配置Lazy模式
 
@@ -2974,7 +2973,7 @@ public Queue lazyQueue(){
 
 这里是通过`QueueBuilder`的`lazy()`函数配置Lazy模式，底层源码如下：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MTIxMDFiNDI2MGVjY2IzYmUzZWU4YjQ4Yzc5MTRmODRfUHd4Tm1FSjV0bVZTWnNYVFJMVVoxWmU4dGRIc3NTTUJfVG9rZW46RUJrbWJXUFlJbzF4Mkt4bkVYVWNXSGNIbjBVXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180647619](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151806918.png)
 
 当然，我们也可以基于注解来声明队列并设置为Lazy模式：
 
@@ -2999,7 +2998,7 @@ rabbitmqctl set_policy Lazy "^lazy-queue$" '{"queue-mode":"lazy"}' --apply-to qu
 
 当然，也可以在控制台配置policy，进入在控制台的`Admin`页面，点击`Policies`，即可添加配置：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MTZhNTJmZjYwN2NiZDM4MDZlZTY5Yzk1NmFjZmJkZTFfZzU4b1lTeEduTjBHcVlnS2dENVQ1T04wTFNVdUpiZmhfVG9rZW46QUZVbGJuNHNNb3FlWDZ4YmxkRmNRUGJZblhjXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180658190](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151806090.png)
 
 #### 7.4.3、消费者的可靠性
 
@@ -3038,7 +3037,7 @@ rabbitmqctl set_policy Lazy "^lazy-queue$" '{"queue-mode":"lazy"}' --apply-to qu
 
 极端情况就是消费者一直无法执行成功，那么消息requeue就会无限循环，导致mq的消息处理飙升，带来不必要的压力：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=ZDJhYTIzMjEyMDc2ZmNmYmI5ZjNiNjJhNGIzNjhiMGFfVzF3TDc2SGZxMjBwb2lNR0RBWFAxNVdrMVdBZnl4NmdfVG9rZW46QjJTcGJKNVJ4bzc4QVF4dXlYUWNhdVhzbjRiXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180715735](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151807027.png)
 
 当然，上述极端情况发生的概率还是非常低的，不过不怕一万就怕万一。为了应对上述情况Spring又提供了消费者失败重试机制：在消费者出现异常时利用本地重试，而不是无限制的requeue到mq队列。
 
@@ -3332,25 +3331,25 @@ UPDATE `order` SET status = ? , pay_time = ? WHERE id = ? AND status = 1
 
 如图，有一组绑定的交换机（`ttl.fanout`）和队列（`ttl.queue`）。但是`ttl.queue`没有消费者监听，而是设定了死信交换机`hmall.direct`，而队列`direct.queue1`则与死信交换机绑定，RoutingKey是blue：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=N2YxMGNhNjhkMGYxNWEzMjMxNTJjYjc2Nzc0Njc4M2ZfUU9zemtXY0EyeVhrUWc2dkdTcmVPeWRKQXoxU0FGcWZfVG9rZW46RFU2QmJ2OUVMb2dYTVZ4akVZWmNTNEM0bmFlXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180737301](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151807835.png)
 
 假如我们现在发送一条消息到`ttl.fanout`，RoutingKey为blue，并设置消息的**有效期**为5000毫秒：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=ODNiODM4NDZiYjk5NzczNmQxODZmZGY4YmJkNjdmYWZfMWlLQ2xLVXBUTW8zSmJBVWg4NDhyN2NHbnUxY2RjaEZfVG9rZW46SUdDV2J6cEVLbzNsb2F4Q0pXa2NRdWtabm1lXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom: 50%;" />
+![](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151807835.png)
 
 :exclamation: **注意**：尽管这里的`ttl.fanout`不需要RoutingKey，但是当消息变为死信并投递到死信交换机时，会沿用之前的RoutingKey，这样`hmall.direct`才能正确路由消息。
 
 消息肯定会被投递到`ttl.queue`之后，由于没有消费者，因此消息无人消费。5秒之后，消息的有效期到期，成为死信：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=NjZlNWRkNzBlODk0YjQ0YzM0NjZmYTQwYTM5ZTA3YThfR0pDOW0zVXFOUVhJdm44QU82V1RWSlB2alNpeENxZGJfVG9rZW46SkxTc2JYNVJ5b1pDS1R4Q3hoR2Nrc1J5bkZiXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180752074](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151807494.png)
 
 死信被再次投递到死信交换机`hmall.direct`，并沿用之前的RoutingKey，也就是`blue`：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MGJlNTQ5MmIzMjZlYWIwY2JmMGYxNWU3ZWQzYWZkZDJfekRwcG4yWXhHaDNhOE16TVk0NXBmTTJBQnZRdnN6U0pfVG9rZW46UlZnU2JqOG90b1F0S1l4c2Q0amMyT2RGbk9iXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180759234](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151807546.png)
 
 由于`direct.queue1`与`hmall.direct`绑定的key是blue，因此最终消息被成功路由到`direct.queue1`，如果此时有消费者与`direct.queue1`绑定， 也就能成功消费消息了。但此时已经是5秒钟以后了：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=OTI3OTBiYzYxYTI1OGIwOTY2MDU0NGMzNjIyMjFiYWZfbUJaU0ozdjFadllENUNRZzVhYUt3R3V1dHp4eFJZeUNfVG9rZW46S1p4MGJCU2g3b2ZoNGp4QTBsVGNUbEwxbmljXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom: 50%;" />
+![image-20241115180805255](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151808550.png)
 
 也就是说，publisher发送了一条消息，但最终consumer在5秒后才收到消息。我们成功实现了**延迟消息**。
 
@@ -3454,7 +3453,7 @@ void testPublisherDelayMessage() {
 
 接下来，我们就在交易服务中利用延迟消息实现订单超时取消功能。其大概思路如下：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=NzBiYTRkNDY1YmJhMWYwMWFjZDAwNjM0OTg2Y2Q2YmVfekJJcU5STEt6Z3lXWFBGNmRQUEIzOGZWVWdXSWYzTmlfVG9rZW46TUlPaGJzeTdLb21HTk14blhYSWM0VHU0blhXXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom: 50%;" />
+![image-20241115180846551](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151808004.png)
 
 假如订单超时支付时间为30分钟，理论上说我们应该在下单时发送一条延迟消息，延迟时间为30分钟。这样就可以在接收到消息时检验订单支付状态，关闭未支付订单。
 
@@ -3462,7 +3461,7 @@ void testPublisherDelayMessage() {
 
 无论是消息发送还是接收都是在交易服务完成，因此我们在`trade-service`中定义一个常量类，用于记录交换机、队列、RoutingKey等常量：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MzhjY2JlZWRkOTkyNGRkNzFhMjhjNzgzNmZjNzk3OTBfeGFwdU1xaE45NGpVdVZhaUtwS0dHRXM1aUdUUXJjVldfVG9rZW46R0hCR2JUMldMb3JlT3d4d3lUNWNQdTFhbk9mXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180917871](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151809184.png)
 
 内容如下：
 
@@ -3504,7 +3503,7 @@ spring:
 
 修改`trade-service`模块的`com.hmall.trade.service.impl.OrderServiceImpl`类的`createOrder`方法，添加消息发送的代码：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MTM3NGUxNzJiMDEzNTcyMjZmYjA2N2VlZDY3NTU0NzFfRFlzZmRiYUlZU0lud0FrNkN0T1p3Q3ZxeFk5NXpYT0lfVG9rZW46VzRWZ2JiaWM1b05NRUJ4WGEzc2Mzc3hGblZjXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180930256](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151809608.png)
 
 这里延迟消息的时间应该是15分钟，不过我们为了测试方便，改成10秒。
 
@@ -3514,7 +3513,7 @@ spring:
 
 首先，在`hm-api`模块定义三个类：
 
-<img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=NTBlMjM2ZmJjNGVmODIyOTcxYTE2YjQ4NTI1YzA5ODlfQnJXQW5NV3BHQmxmbVpuYkFad0hVN2lHcnI2M0NoYUhfVG9rZW46VTRhUGJoQXJBb3ZDWHl4czNpUmNINklVbkFjXzE3MzA1NDU3OTQ6MTczMDU0OTM5NF9WNA" alt="img" style="zoom:50%;" />
+![image-20241115180939726](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411151809039.png)
 
 说明：
 
@@ -5098,7 +5097,7 @@ void testLoadItemDocs() throws IOException {
 
 -  第一步，创建`SearchRequest`对象，指定索引库名 
 -  第二步，利用`request.source()`构建DSL，DSL中可以包含查询、分页、排序、高亮等 
-  - `query()`：代表查询条件，利用`QueryBuilders.matchAllQuery()`构建一个`match_all`查询的DSL
+   - `query()`：代表查询条件，利用`QueryBuilders.matchAllQuery()`构建一个`match_all`查询的DSL
 -  第三步，利用`client.search()`发送请求，得到响应 
 
 这里关键的API有两个，一个是`request.source()`，它构建的就是DSL中的完整JSON参数。其中包含了`query`、`sort`、`from`、`size`、`highlight`等所有功能：
@@ -5604,13 +5603,13 @@ https://www.elastic.co/guide/en/elasticsearch/reference/7.12/search-aggregations
 聚合常见的有三类：
 
 -  **桶（****`Bucket`****）**聚合：用来对文档做分组 
-  - `TermAggregation`：按照文档字段值分组，例如按照品牌值分组、按照国家分组
-  - `Date Histogram`：按照日期阶梯分组，例如一周为一组，或者一月为一组
+   - `TermAggregation`：按照文档字段值分组，例如按照品牌值分组、按照国家分组
+   - `Date Histogram`：按照日期阶梯分组，例如一周为一组，或者一月为一组
 -  **度量（****`Metric`****）**聚合：用以计算一些值，比如：最大值、最小值、平均值等 
-  - `Avg`：求平均值
-  - `Max`：求最大值
-  - `Min`：求最小值
-  - `Stats`：同时求`max`、`min`、`avg`、`sum`等
+   - `Avg`：求平均值
+   - `Max`：求最大值
+   - `Min`：求最小值
+   - `Stats`：同时求`max`、`min`、`avg`、`sum`等
 -  **管道（****`pipeline`****）**聚合：其它聚合的结果为基础做进一步运算 
 
 **注意：**参加聚合的字段必须是keyword、日期、数值、布尔类型
