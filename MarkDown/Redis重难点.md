@@ -321,7 +321,6 @@ public class RedissionConfig {
 > 我们知道“对象一把锁，多个对象多把锁”，可重入锁的概念就是：自己可以获取自己的内部锁。
 >
 > 假如有一个线程 T 获得了对象 A 的锁，那么该线程 T 如果在未释放前再次请求该对象的锁时，如果没有可重入锁的机制，是不会获取到锁的，这样的话就会出现死锁的情况
->
 
 这里除了记录key和ThreaId外，还需有记录重入次数，所以我们需要用hash, 每次的thead一样时，次数+1；
 
@@ -332,7 +331,6 @@ public class RedissionConfig {
 > ex： 设置过期时间
 >
 > 但是Redis的hash结构没有nx这个命令，所以我们只能先判是否存在(exist)，再设置过期时间
->
 
 <img src="https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411091858092.png" alt="image-20241106225831769" style="zoom: 67%;" />
 
@@ -912,7 +910,7 @@ slave与master的offset之间的差异，就是salve需要增量拷贝的数据�
 
 
 
-#### 2.3.主从同步优化
+#### 7.2.2、主从同步优化
 
 主从同步可以保证主从数据的一致性，非常重要。
 
@@ -931,7 +929,7 @@ slave与master的offset之间的差异，就是salve需要增量拷贝的数据�
 
 
 
-#### 2.4.小结
+#### 7.2.3、小结
 
 简述全量同步和增量同步区别？
 
@@ -1160,17 +1158,20 @@ Redis会把每一个master节点映射到0~16383共16384个插槽（hash slot）
 要将数据缓存在集群的哪一台节点上，采用哈希算法，这里有两种哈希算法：
 
 1. 哈希取余算法：计算公式：hash(key) % N ，N为集群中节点的数量
+
    - 这种哈希算法虽然简单，但是会有一个缺点：当集群数量发生改变的时候，那么计算公式的分母发生改变，之前存储的所有slot中的数据，都要重新进行排列
+
 2. 一致性哈希算法：计算公式：hash(key) % 2^32^
+
    - 目的：当服务器个数发生变动时尽量减少影响客户端到服务器的映射关系
    - 实现：采用一致性哈希环，即令 2^32^ = 0 ，让哈希表首位相连成一个环，集群中每个节点落在环上的位置是固定的
-   
+
    <img src="https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411091858127.png" alt="image-20241107184959764" style="zoom: 67%;" />
-   
+
    - 落键规则：hash(key) 并对2^32^ 取模过后，将会落在一致性哈希环的某个位置，然后顺时针寻找第一个Redis节点，那么此key就属于该节点存储
    - 优点：若节点数量发生变化，影响的映射关系也只有出现变化的那个节点逆时针到第一个节点之间的映射关系 例如：新增了一个节点，那么该节点逆时针到上一个节点之间的数据归新节点所有；删除了一个节点，那么该节点逆时针到上一个节点之间的数据归顺时针下一个节点所有
    - 缺点：当节点太少时，容易发生数据倾斜问题
-   
+
    <img src="https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411091858128.png" alt="image-20241107185014119" style="zoom: 67%;" />
 
 **解决方法——虚拟节点**
@@ -1538,7 +1539,7 @@ Redis动态扩/缩容时，slot槽位会发生变化，若是请求经过hash到
 
 
 
-#### 4.6.RedisTemplate访问分片集群
+#### 7.4.4、RedisTemplate访问分片集群
 
 RedisTemplate底层同样基于lettuce实现了分片集群的支持，而使用的步骤与哨兵模式基本一致：
 
@@ -1550,7 +1551,7 @@ RedisTemplate底层同样基于lettuce实现了分片集群的支持，而使用
 
 与哨兵模式相比，1）和3）已在哨兵模式下配置过了，其中只有分片集群的配置方式略有差异，如下：
 
-```
+```yaml
 spring:
   redis:
     cluster:
@@ -1699,25 +1700,25 @@ Caffeine提供了三种**缓存驱逐策略**：
 >
 > ```
 > /*
->  基于大小设置驱逐策略：
->  */
+> 基于大小设置驱逐策略：
+> */
 > @Test
 > void testEvictByNum() throws InterruptedException {
->     // 创建缓存对象
->     Cache<String, String> cache = Caffeine.newBuilder()
->             // 设置缓存大小上限为 1
->             .maximumSize(1)
->             .build();
->     // 存数据
->     cache.put("gf1", "柳岩");
->     cache.put("gf2", "范冰冰");
->     cache.put("gf3", "迪丽热巴");
->     // 延迟10ms，给清理线程一点时间
->     Thread.sleep(10L);
->     // 获取数据
->     System.out.println("gf1: " + cache.getIfPresent("gf1"));
->     System.out.println("gf2: " + cache.getIfPresent("gf2"));
->     System.out.println("gf3: " + cache.getIfPresent("gf3"));
+>  // 创建缓存对象
+>  Cache<String, String> cache = Caffeine.newBuilder()
+>          // 设置缓存大小上限为 1
+>          .maximumSize(1)
+>          .build();
+>  // 存数据
+>  cache.put("gf1", "柳岩");
+>  cache.put("gf2", "范冰冰");
+>  cache.put("gf3", "迪丽热巴");
+>  // 延迟10ms，给清理线程一点时间
+>  Thread.sleep(10L);
+>  // 获取数据
+>  System.out.println("gf1: " + cache.getIfPresent("gf1"));
+>  System.out.println("gf2: " + cache.getIfPresent("gf2"));
+>  System.out.println("gf3: " + cache.getIfPresent("gf3"));
 > }
 > ```
 >
@@ -1727,21 +1728,21 @@ Caffeine提供了三种**缓存驱逐策略**：
 >
 > ```
 > /*
->  基于时间设置驱逐策略：
->  */
+> 基于时间设置驱逐策略：
+> */
 > @Test
 > void testEvictByTime() throws InterruptedException {
->     // 创建缓存对象
->     Cache<String, String> cache = Caffeine.newBuilder()
->             .expireAfterWrite(Duration.ofSeconds(1)) // 设置缓存有效期为 10 秒
->             .build();
->     // 存数据
->     cache.put("gf", "柳岩");
->     // 获取数据
->     System.out.println("gf: " + cache.getIfPresent("gf"));
->     // 休眠一会儿
->     Thread.sleep(1200L);
->     System.out.println("gf: " + cache.getIfPresent("gf"));
+>  // 创建缓存对象
+>  Cache<String, String> cache = Caffeine.newBuilder()
+>          .expireAfterWrite(Duration.ofSeconds(1)) // 设置缓存有效期为 10 秒
+>          .build();
+>  // 存数据
+>  cache.put("gf", "柳岩");
+>  // 获取数据
+>  System.out.println("gf: " + cache.getIfPresent("gf"));
+>  // 休眠一会儿
+>  Thread.sleep(1200L);
+>  System.out.println("gf: " + cache.getIfPresent("gf"));
 > }
 > ```
 >
@@ -3436,6 +3437,7 @@ BigKey内存占用较多，即便是删除这样的key也需要耗费很长时�
 	</tr>
 </table>
 
+
 优点：底层使用ziplist，空间占用小，可以灵活访问对象的任意字段
 
 缺点：代码相对复杂
@@ -3462,6 +3464,7 @@ BigKey内存占用较多，即便是删除这样的key也需要耗费很长时�
         <td>value999999</td>
     </tr>
 </table>
+
 
 存在的问题：
 
@@ -3500,6 +3503,7 @@ BigKey内存占用较多，即便是删除这样的key也需要耗费很长时�
         <td>value999999</td>
     </tr>
 </table>
+
 
 存在的问题：
 
@@ -3562,6 +3566,7 @@ BigKey内存占用较多，即便是删除这样的key也需要耗费很长时�
         <td>value999999</td>
     </tr>
 </table>
+
 数据导入测试案例：
 
 ```java
