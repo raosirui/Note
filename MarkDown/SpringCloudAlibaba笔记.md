@@ -996,6 +996,7 @@ hm:
 代码如下：
 
 ```Java
+
 @Data
 @Component
 @ConfigurationProperties(prefix = "hm.cart")
@@ -1356,7 +1357,7 @@ public class DynamicRouteLoader {
 
 
 
-## 5、微服务保护
+## 5、微服务保护 Sentinel
 
 ### 5.1、服务保护方案
 
@@ -1990,8 +1991,8 @@ Seata对原始的XA模式做了简单的封装和改造，以适应自己的事�
 `TC`二阶段的工作：
 
 1.  `TC`检测各分支事务执行状态
-    1. 如果都成功，通知所有RM提交事务
-    2. 如果有失败，通知所有RM回滚事务 
+   1. 如果都成功，通知所有RM提交事务
+   2. 如果有失败，通知所有RM回滚事务 
 
 `RM`二阶段的工作：
 
@@ -5097,7 +5098,7 @@ void testLoadItemDocs() throws IOException {
 
 -  第一步，创建`SearchRequest`对象，指定索引库名 
 -  第二步，利用`request.source()`构建DSL，DSL中可以包含查询、分页、排序、高亮等 
-   - `query()`：代表查询条件，利用`QueryBuilders.matchAllQuery()`构建一个`match_all`查询的DSL
+  - `query()`：代表查询条件，利用`QueryBuilders.matchAllQuery()`构建一个`match_all`查询的DSL
 -  第三步，利用`client.search()`发送请求，得到响应 
 
 这里关键的API有两个，一个是`request.source()`，它构建的就是DSL中的完整JSON参数。其中包含了`query`、`sort`、`from`、`size`、`highlight`等所有功能：
@@ -5603,13 +5604,13 @@ https://www.elastic.co/guide/en/elasticsearch/reference/7.12/search-aggregations
 聚合常见的有三类：
 
 -  **桶（****`Bucket`****）**聚合：用来对文档做分组 
-   - `TermAggregation`：按照文档字段值分组，例如按照品牌值分组、按照国家分组
-   - `Date Histogram`：按照日期阶梯分组，例如一周为一组，或者一月为一组
+  - `TermAggregation`：按照文档字段值分组，例如按照品牌值分组、按照国家分组
+  - `Date Histogram`：按照日期阶梯分组，例如一周为一组，或者一月为一组
 -  **度量（****`Metric`****）**聚合：用以计算一些值，比如：最大值、最小值、平均值等 
-   - `Avg`：求平均值
-   - `Max`：求最大值
-   - `Min`：求最小值
-   - `Stats`：同时求`max`、`min`、`avg`、`sum`等
+  - `Avg`：求平均值
+  - `Max`：求最大值
+  - `Min`：求最小值
+  - `Stats`：同时求`max`、`min`、`avg`、`sum`等
 -  **管道（****`pipeline`****）**聚合：其它聚合的结果为基础做进一步运算 
 
 **注意：**参加聚合的字段必须是keyword、日期、数值、布尔类型

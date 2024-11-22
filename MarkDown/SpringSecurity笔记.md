@@ -45,7 +45,6 @@
 :star::star::star:
 
 ### 1.2、SpringSecurity完整流程
-
 SpringSecurity的原理其实就是一个过滤器链，内部包含了提供各种功能的过滤器。这里我们可以看看入门案例中的过滤器。
 
 ![image-20241109215111327](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411092151380.png)
@@ -68,7 +67,7 @@ FilterSecurityInterceptor： 负责权限校验的过滤器。
 
 ### 1.3、:star:认证流程详解
 
-![image-20241109215147676](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411092151736.png)
+<img src="https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411092151736.png" alt="image-20241109215147676" style="zoom:200%;" />
 
 Authentication接口: 它的实现类，表示当前访问系统的用户，封装了用户相关信息。
 
@@ -194,7 +193,6 @@ public class LoginUser implements UserDetails {
 
 
 ### 3.2、密码加密存储
-
  实际项目中我们不会把密码明文存储在数据库中。
 
  默认使用的PasswordEncoder要求数据库中的密码格式为：{id}password 。它会根据id去判断密码的加密方式。但是我们一般不会采用这种方式。所以就需要替换PasswordEncoder。
@@ -225,7 +223,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  在接口中我们通过AuthenticationManager的authenticate方法来进行用户认证,所以需要在SecurityConfig中配置把AuthenticationManager注入容器。
 
  认证成功的话要生成一个jwt，放入响应中返回。并且为了让用户下回请求时能通过jwt识别出具体的是哪个用户，我们需要把用户信息存入redis，可以把用户id作为key。
-
 ```java
 @RestController
 public class LoginController {
@@ -312,7 +309,6 @@ public class LoginServiceImpl implements LoginServcie {
  使用userid去redis中获取对应的LoginUser对象。
 
  然后封装Authentication对象存入SecurityContextHolder
-
 ```java
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
@@ -442,7 +438,6 @@ public class LoginServiceImpl implements LoginServcie {
 ## 4、授权核心代码
 
 ### 4.1、授权基本流程
-
 在SpringSecurity中，会使用默认的FilterSecurityInterceptor来进行权限校验。在FilterSecurityInterceptor中会从SecurityContextHolder获取其中的Authentication，然后获取其中的权限信息。当前用户是否拥有访问当前资源所需的权限。
 
 所以我们在项目中只需要把当前登录用户的权限信息也存入Authentication。
@@ -478,7 +473,6 @@ public class HelloController {
 
 
 ### 4.3、封装权限信息
-
  我们前面在写UserDetailsServiceImpl的时候说过，在查询出用户后还要获取对应的权限信息，封装到UserDetails中返回。
 
  我们先直接把权限信息写死封装到UserDetails中进行测试。
@@ -817,7 +811,6 @@ public class CorsConfig implements WebMvcConfigurer {
 ## 7、其他问题
 
 ### 7.1、其它权限校验方法
-
  我们前面都是使用@PreAuthorize注解，然后在在其中使用的是hasAuthority方法进行校验。SpringSecurity还为我们提供了其它方法例如：hasAnyAuthority，hasRole，hasAnyRole等。
 
  这里我们先不急着去介绍这些方法，我们先去理解hasAuthority的原理，然后再去学习其他方法你就更容易理解，而不是死记硬背区别。并且我们也可以选择定义校验方法，实现我们自己的校验逻辑。
@@ -855,7 +848,6 @@ public String hello(){
 
 
 ### 7.2、自定义权限校验方法
-
  我们也可以定义自己的权限校验方法，在@PreAuthorize注解中使用我们的方法。
 
 ```java
@@ -882,7 +874,6 @@ public String hello(){
     return "hello";
 }
 ```
-
 ### 7.3、基于配置的权限控制
 
  我们也可以在配置类中使用使用配置的方式对资源进行权限控制。
@@ -918,7 +909,6 @@ public String hello(){
 ```
 
 ### 7.4、CSRF
-
  CSRF是指跨站请求伪造（Cross-site request forgery），是web常见的攻击之一。
 
  https://blog.csdn.net/freeking101/article/details/86537087
@@ -928,11 +918,9 @@ public String hello(){
  我们可以发现CSRF攻击依靠的是cookie中所携带的认证信息。但是在前后端分离的项目中我们的认证信息其实是token，而token并不是存储中cookie中，并且需要前端代码去把token设置到请求头中才可以，所以CSRF攻击也就不用担心了。
 
 ### 7.5、认证成功处理器
-
  实际上在UsernamePasswordAuthenticationFilter进行登录认证的时候，如果登录成功了是会调用AuthenticationSuccessHandler的方法进行认证成功后的处理的。AuthenticationSuccessHandler就是登录成功处理器。
 
  我们也可以自己去自定义成功处理器进行成功后的相应处理。
-
 ```java
 @Component
 public class SGSuccessHandler implements AuthenticationSuccessHandler {
@@ -961,11 +949,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 ```
 
 ### 7.6、认证失败处理器
-
  实际上在UsernamePasswordAuthenticationFilter进行登录认证的时候，如果认证失败了是会调用AuthenticationFailureHandler的方法进行认证失败后的处理的。AuthenticationFailureHandler就是登录失败处理器。
 
  我们也可以自己去自定义失败处理器进行失败后的相应处理。
-
 ```java
 @Component
 public class SGFailureHandler implements AuthenticationFailureHandler {
