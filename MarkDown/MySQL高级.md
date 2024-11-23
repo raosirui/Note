@@ -2678,3 +2678,282 @@ select object_schema,object_name,index_name,lock_type,lock_mod,lock_data from pe
 语法：
 	source /root/xxxxx.sql
 ```
+
+
+
+
+
+8、运维篇
+---
+
+### 8.1、日志
+
+#### 8.1.1、错误日志
+
+ 错误日志是MySQL中最重要的日志之一，它记录了当mysqld启动和停止时，以及服务器在运行过程中发生任何严重错误时的相关信息。当数据库出现任何故障导致无法正常使用时，建议首先查看此日志。
+
+ 该日志是默认开启的，默认存放目录/var/logl，默认的日志文件名为psmysqld.log。查看日志位置;
+
+`show variables like '%log_error%'`
+
+#### 8.1.2、二进制日志
+
+ 通过mysql管理中的**mysqlbinlog**查看二进制文件，笔记在MYSQL管理中,主要包含DDL和DML语句；
+
+![image-20241123191723980](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231917144.png)
+
+`show variables like 'binlog_format'`
+
+日志删除：
+
+对于比较繁忙的业务系统，每天生成的binlog数据巨大，如果长时间不清除，将会占用大量磁盘空间。可以通过以下几种方式清理日志; 
+![image-20241123191737805](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231917965.png)
+
+查看过期时间：`show variables like '%binlog_expire%';`
+
+#### 8.1.3、查询日志
+
+ 查询日志中记录了客户端的所有操作语句，而二进制日志不包含查询数据的SQL语句。默认情况下，查询日志是未开启的。如果需要开启查询日志，可以设置以下配置︰  
+![image-20241123191746327](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231917561.png)
+
+#### 8.1.4、慢查询日志
+
+![image-20241123191813469](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231918660.png)
+
+### 8.2、主从复制
+
+**概述**
+
+ 主从复制是指将数据库的DDL和DML操作通过二进制日志传到从库服务器中，然后在从库上对这些日志重新执行（也叫重做），从而使得从库和主库的数据保持同步。
+
+MYSQL支持一台主库同时向多台从库进行复制，从库同时也可以作为其他从服务器的主库，实现链状复制。
+
+优点：
+
+*   主库出现问题，可以快速切换到从库提供服务；
+*   实现读写分离，降低主库的访问压力；
+*   可以在从库中执行备份，以避免备份期间影响主库服务；
+
+**原理**  
+![image-20241123191827025](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231918345.png)  
+复制分为三步：
+
+*   Master 主库在事务提交时，会把数据变更记录在二进制文件Binlog中。
+*   从库读取数据库的二进制日志文件Binlog,写入到从库的中继日志Relay log。
+*   slave重做中继日志中的事件，将改变反映它自己的数据。
+
+**搭建**
+
+1.  服务器准备  
+    ![](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231918789.png)
+2.  主库配置
+
+![image-20241123191900183](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231919353.png)
+
+字段含义说明：
+
+*   file:从哪个日志文件开始推送日志文件；
+*   position：从哪个位置开始推送日志；
+*   binlog\_ignore\_db:指定不需要同步的数据库；
+
+3.  从库配置  
+    ![image-20241123191914214](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231919386.png)
+
+### 8.3、分库分表
+
+> **介绍**  
+> ![image-20241123191929065](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231919238.png)  
+> 拆分策略  
+> ![image-20241123191938951](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231919101.png)  
+> 垂直分库：以表为依据，根据业务的不同表拆分到不同库中。  
+> ![image-20241123191947722](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231919907.png)  
+> 特点：
+
+*   每个库的表结构都不一样；
+*   每个库的数据也不一样；
+*   所有库的并集是全量数据；
+
+垂直分表：以字段为依据，根据字段属性将不同字段拆分到不同表中。  
+![image-20241123191957702](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231919889.png)  
+特点：
+
+*   每个表的结构都不一样；
+*   每个表的数据也不一样，一般通过一列（主键/外键）关联；
+*   所有表的并集是全量数据；
+
+水平拆分
+
+水平分库：以字段为依据，按照一定的策略，将一个库的数据拆分到多个库中。  
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/4887ce4e705c872efc797a14e5dabd24.png)
+
+*   每个库的表结构都一样；
+*   每个库的数据都不一样；
+*   所有库的并集是全量数据；
+
+水平分表：以字段为依据，按照一定的策略，将一个表的数据拆分到多个表中。  
+![image-20241123192026703](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231920886.png)
+
+*   每个表的表结构都一样；
+*   每个表的数据都不一样；
+*   所有表的并集是全量数据；
+
+实现技术：
+
+shardingJDBC:基于AOP原理，在应用程序中对本地执行的SQL进行拦截，解析、改写、路由处理。需要自行编码配置实现，只支持java语言，性能较高。
+
+MyCat：数据库分库分表中间件，不用调整代码即可实现分库分表，支持多种语言，性能不及前者。
+
+> **Mycat概述**
+
+MyCat是[开源](https://edu.csdn.net/cloud/pm_summit?utm_source=blogglc)的、活跃的，基于java语言编写的Mysql数据库中间件。可以像使用mysql一样来使用mycat，对于开发人员来说根本感觉不到mycat的存在。（伪装协议）
+
+优势：
+
+*   性能可靠稳定；
+*   强大的技术团队；
+*   体系完善；
+*   社区活跃。
+
+下载、安装：链接：https://pan.baidu.com/s/18U6J-ydToUyUcU-UqBu5Ng?pwd=1234 提取码：1234
+
+需要安装：jdk、mysql后mycat安装才能用；
+
+目录结构：
+
+*   bin:存放可执行文件，用于启动停止mycat；
+*   conf:存放mycat的配置文件；
+*   lib:存放mycat的项目依赖包；
+*   logs:存放mycat的日志文件；
+
+> **Mycat入门**
+
+由于tb\_order表中数据量很大，磁盘o及容量都到达了瓶颈，现在需要对tb\_order表进行数据分片，分为三个数据节点，每一个节点主机位于不同的服务器上,具体的结构，参考下图:  
+![image-20241123192051024](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231920189.png)
+
+分片配置
+
+配置`schema.xml`  
+![image-20241123192124662](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231921882.png)
+
+> Mycat配置
+
+启动服务
+
+ 切换到Mycat的安装目录，执行如下命令，启动mycat：
+
+    #启动
+    bin/mycat start
+    #停止
+    bin/mycat stop
+    Mycat启动后，占用端口号8066
+
+
+​    
+
+schema.xml
+
+schema.xml作为mycat最重要的配置文件之一，涵盖了mycat的逻辑库、逻辑表、分片规则、分片节点及数据源的配置。
+
+主要包含以下三组标签：
+
+*   schema标签
+    
+    *   ![image-20241123192239092](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231922232.png)
+        
+    *   schema标签用于定义MyCat实例中的逻辑库，一个MyCat实例中,可以有多个逻辑库，可以通过schema标签来划分不同的逻辑库。MyCat中的逻辑库的概念，等同于MySQL中的database概念，需要操作某个逻辑库下的表时也需要切换逻辑库(use xxx)。
+        
+    *   ![image-20241123192247035](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231922182.png)
+        
+    *   ![image-20241123192255208](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231922369.png)
+    
+*   DataNode标签  
+    ![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/ca0a00df68f4ba47892518b6b153d7ac.png)
+    
+*   datahost标签
+    
+
+![image-20241123192321727](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231923069.png)
+
+*   rule.xml
+    
+    rule.xml中定义所有拆分表的规则，在使用过程中可以灵活的使用分片算法，或者对同一个分片算法使用不同的参数，它让分片过程可配置化。主要包含两类标签：tableRule、Function。  
+    ![image-20241123192333330](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231923495.png)
+    
+*   server.xml
+    
+    *   user标签
+    *   ![image-20241123192345742](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231923900.png)
+*   **Mycat分片**
+    
+
+垂直拆分
+
+场景：在业务系统中,涉及以下表结构,但是由于用户与订单每天都会产生大量的数据,单台服务器的数据存储及处理能力是有限的,可以对数据库表进行拆分,原有的数据库表如下。  
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/1a536f0196ac52a8a8c25750274de633.png)
+
+ps:分库不需要指定 rule，涉及分表需要使用rule；
+
+水平拆分
+
+![image-20241123192413850](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231924038.png)
+
+分片规则
+
+*   范围分片
+    
+*   取模分片(mod-long)（字段为数字）
+    
+*   一致性hash（shading-by-murmur）
+    
+*   枚举分片（shading-by-intfile）
+    
+    *   ![image-20241123192432185](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231924445.png)
+*   应用指定分片
+    
+    *   运行阶段由应用自主决定路由分到哪个分片直接根据字符子串（必须是数字）计算分片号。
+    *   ![image-20241123192443607](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231924776.png)
+*   固定分片hash算法
+    
+    *   该算法类似于十进制的求模运算，但是为二进制的操作。例如：取id的二进制低10位与1111111111进行位运算。
+    *   ![image-20241123192458499](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231924675.png)
+*   字符串hash解析
+    
+*   按（天）日期分片  
+    ![image-20241123192509589](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231925775.png)
+
+> **Mycat管理及监控**（中间件）
+
+![在这里插入图片描述](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231925704.png)  
+![image-20241123192543853](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231925022.png)
+
+![image-20241123192601220](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231926376.png)
+
+
+
+### 8.4、读写分离
+
+*   介绍
+
+![image-20241123192620080](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231926289.png)
+
+*   一主一从
+    
+*   一主一从读写分离
+    
+    *   ![image-20241123192632938](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231926116.png)\- ![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/cfaa105561ceaebfebc7fd6a1d44df37.png)
+        
+    *   balance一般设置为1或3;
+        
+    *   从节点不会同步到主节点
+        
+    *   主库宕机后，依然可以查询，但不能写入了
+    
+*   双主双从
+    
+
+![image-20241123192739757](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231927927.png)  
+![image-20241123192814697](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231928876.png)  
+![image-20241123192842321](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231928503.png)![image-20241123192905552](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231929750.png)
+
+*   双主双从读写分离  
+    ![image-20241123192916443](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231929629.png)![image-20241123192925254](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411231929462.png)
