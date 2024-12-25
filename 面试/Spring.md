@@ -190,9 +190,9 @@ Spring MVC 是 Spring 框架的一部分，专门用于处理 Web 请求，基�
 
 
 
-## IoC
+## ​IoC
 
-### 说一说什么是 IoC、DI？
+### :star:说一说什么是 IoC、DI？
 
 所谓的**IoC**，就是**由容器来控制对象的生命周期和对象之间的关系。控制对象生命周期的不再是引用它的对象，而是容器**，这就叫**控制反转**（Inversion of Control）。
 
@@ -354,7 +354,7 @@ public class ToolFactoryBean implements FactoryBean<Tool> {
 
 
 
-### 能说一下 Bean 的生命周期吗？
+### :star:能说一下 Bean 的生命周期吗？
 
 Bean 的生命周期大致分为五个阶段：
 
@@ -701,7 +701,7 @@ A 实例的初始化过程：
 
 ## AOP
 
-### 说说什么是 AOP？
+### :star:说说什么是 AOP？
 
 AOP，也就是面向切面编程，简单点说，AOP 就是把一些业务逻辑中的相同代码抽取到一个独立的模块中，让业务逻辑更加清爽。
 
@@ -1034,7 +1034,7 @@ rollbackFor 用来指定能够触发事务回滚的异常类型。Spring 默认�
 
 
 
-### Spring MVC 的工作流程？
+### :star:Spring MVC 的工作流程？
 
 首先，客户端发送请求，DispatcherServlet 拦截并通过 HandlerMapping 找到对应的控制器。
 
@@ -1088,7 +1088,7 @@ Spring MVC 允许使用多种类型的处理器。不仅仅是标准的`@Control
 
 我们都知道 Restful 接口，响应格式是 json，这就用到了一个常用注解：**@ResponseBody**
 
-```
+```java
     @GetMapping("/user")
     @ResponseBody
     public User user(){
@@ -1147,7 +1147,7 @@ Spring Boot 的优点非常多，比如说：
 
 
 
-### SpringBoot 自动配置原理了解吗？
+### :star:SpringBoot 自动配置原理了解吗？
 
 在 Spring 中，自动装配是指容器利用**反射**技术，根据 Bean 的类型、名称等自动注入所需的依赖。
 

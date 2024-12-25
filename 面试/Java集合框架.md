@@ -905,7 +905,7 @@ LinkedHashMap 维护了一个双向链表，有头尾节点，同时 LinkedHashM
 
 TreeMap 通过 key 的比较器来决定元素的顺序，如果没有指定比较器，那么 **key 必须实现 Comparable 接口**
 
-TreeMap 的底层是红黑树，红黑树是一种自平衡的二叉查找树，每个节点都大于其左子树中的任何节点，小于其右子节点树种的任何节点。
+TreeMap 的底层是红黑树，红黑树是一种自平衡的二叉查找树，**每个节点都大于其左子树中的任何节点，小于其右子节点树种的任何节点。**
 
 ![image-20241216172216762](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202412161722852.png)
 
@@ -933,7 +933,7 @@ HashSet 其实是由 HashMap 实现的，只不过**值由一个固定的 Object
 
 HashSet 主要用于去重
 
-HashSet 会自动去重，因为它是用 HashMap 实现的，HashMap 的键是唯一的（哈希值），相同键的值会覆盖掉原来的值，于是第二次 set.add("沉默") 的时候就覆盖了第一次的 set.add("沉默")。
+HashSet 会自动去重，因为它是用 HashMap 实现的，HashMap 的键是唯一的（哈希值），**相同键的值会覆盖掉原来的值**，于是第二次 set.add("沉默") 的时候就覆盖了第一次的 set.add("沉默")。
 
 [![三分恶面渣逆袭：HashSet套娃](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202412161728653.png)](https://camo.githubusercontent.com/d25d5bdb3a6f8394354dd40a7a5045d068df7d08b958911a298006c7c4ecf297/68747470733a2f2f63646e2e746f62656265747465726a61766165722e636f6d2f746f62656265747465726a61766165722f696d616765732f736964656261722f73616e66656e652f636f6c6c656374696f6e2d33362e706e67)
 
