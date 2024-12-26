@@ -190,7 +190,7 @@ Spring MVC 是 Spring 框架的一部分，专门用于处理 Web 请求，基�
 
 
 
-## ​IoC
+## IoC
 
 ### :star:说一说什么是 IoC、DI？
 
@@ -1159,9 +1159,9 @@ Spring Boot 的优点非常多，比如说：
 
 其中，`@EnableAutoConfiguration` 是自动配置的核心。
 
-它通过 `@Import` 注解引入了 `AutoConfigurationImportSelector` 类。
+它通过 **`@Import`** 注解引入了 `AutoConfigurationImportSelector` 类。
 
-`AutoConfigurationImportSelector` 会从 `META-INF/spring.factories` 文件中读取所有自动配置类的全限定类名。
+`AutoConfigurationImportSelector` 会从 **`META-INF/spring.factories` 文件中读取所有自动配置类的全限定类名**。
 
 
 
@@ -1212,11 +1212,11 @@ Spring Boot Starter 主要**通过起步依赖和自动配置机制来简化项�
 
 Spring Boot 的启动由 SpringApplication 类负责：
 
-- 第一步，创建 SpringApplication 实例，负责应用的启动和初始化；
-- 第二步，从 application.yml 中加载配置文件和环境变量；
-- 第三步，创建上下文环境 ApplicationContext，并加载 Bean，完成依赖注入；
-- 第四步，启动内嵌的 Web 容器。
-- 第五步，发布启动完成事件 ApplicationReadyEvent，并调用 ApplicationRunner 的 run 方法完成启动后的逻辑。
+- 第一步，**创建 SpringApplication 实例**，负责应用的启动和初始化；
+- 第二步，从 **application.yml 中加载配置文件**和环境变量；
+- 第三步，创建上下文环境 ApplicationContext，并加载 Bean，完成**依赖注入**；
+- 第四步，启动内嵌的 **Web 容器**。
+- 第五步，发布启动完成事件 ApplicationReadyEvent，并**调用 ApplicationRunner 的 run 方法**完成启动后的逻辑。
 
 [![SpringBoot 启动大致流程-图片来源网络](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202412191907345.png)](https://camo.githubusercontent.com/98b0abba59bcafeb9e0e93c41ae17d70066ce75d81d4c30a4cc5812ef01534fa/68747470733a2f2f63646e2e746f62656265747465726a61766165722e636f6d2f746f62656265747465726a61766165722f696d616765732f736964656261722f73616e66656e652f737072696e672d36383734343535362d613162612d346531662d613039322d3135383238373566306461362e706e67)
 
