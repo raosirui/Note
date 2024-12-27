@@ -1052,9 +1052,12 @@ Java 对象头里的 `Mark Word` 会记录锁的状态，一共有四种状态�
 它们都可以用来实现同步，但也有一些区别：
 
 - ReentrantLock 可以实现**多路选择通知**（绑定多个 [Condition](https://javabetter.cn/thread/condition.html)），而 synchronized 只能通过 **wait 和 notify/notifyAll** 方法唤醒一个线程或者唤醒全部线程（单路通知）；
+
 - **ReentrantLock 必须手动释放锁**。通常需要在 finally 块中调用 unlock 方法以确保锁被正确释放；synchronized 会自动释放锁，当同步块执行完毕时，由 JVM 自动释放，不需要手动操作。
+
 - ReentrantLock 通常能提供更好的性能，因为它可以更**细粒度**控制锁；synchronized 只能同步代码快或者方法，随着 JDK 版本的升级，两者之间性能差距已经不大了。
-- 
+
+  
 
 #### 使用方式有什么不同？
 

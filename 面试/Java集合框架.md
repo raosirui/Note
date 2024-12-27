@@ -561,9 +561,32 @@ if (e.hash == hash &&
 
 红黑树节点的大小大概是普通节点大小的两倍，所以**转红黑树，牺牲了空间换时间，更多的是一种兜底的策略，保证极端情况下的查找效率。**
 
-阈值为什么要选 8 呢？和统计学有关。理想情况下，使用随机哈希码，链表里的节点符合泊松分布，出现节点个数的概率是递减的，节点个数为 8 的情况，发生概率仅为`0.00000006`。
+阈值为什么要选 8 呢？和统计学有关。理想情况下，使用随机哈希码，链表里的节点符合**泊松分布**，出现节点个数的概率是递减的，节点个数为 8 的情况，发生概率仅为`0.00000006`。
 
 至于**红黑树转回链表的阈值为什么是 6，而不是 8**？是因为如果这个阈值也设置成 8，**假如发生碰撞，节点增减刚好在 8 附近，会发生链表和红黑树的不断转换，导致资源浪费。**
+
+```java
+In usages with well-distributed user hashCodes, tree bins 
+are rarely used.  Ideally, under random hashCodes, the 
+frequency of nodes in bins follows a Poisson distribution 
+(http://en.wikipedia.org/wiki/Poisson_distribution) with a 
+parameter of about 0.5 on average for the default resizing 
+threshold of 0.75, although with a large variance because 
+of resizing granularity. Ignoring variance, the expected 
+occurrences of list size k are (exp(-0.5) * pow(0.5, k) / 
+factorial(k)). The first values are:
+ 
+ 0:    0.60653066
+ 1:    0.30326533
+ 2:    0.07581633
+ 3:    0.01263606
+ 4:    0.00157952
+ 5:    0.00015795
+ 6:    0.00001316
+ 7:    0.00000094
+ 8:    0.00000006
+ more: less than 1 in ten million
+```
 
 
 
