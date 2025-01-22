@@ -2684,6 +2684,8 @@ public void listenSimpleQueueMessage(Map<String, Object> msg) throws Interrupted
 
 ### 7.4、MQ高级
 
+![image-20250119191819302](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202501191918562.png)
+
 大家思考一下，如果这里MQ通知失败，支付服务中支付流水显示支付成功，而交易服务中的订单状态却显示未支付，数据出现了不一致。
 
 此时前端发送请求查询支付状态时，肯定是查询交易服务状态，会发现业务订单未支付，而用户自己知道已经支付成功，这就导致用户体验不一致。

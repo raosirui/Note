@@ -951,7 +951,7 @@ Spring 事务的本质其实就是数据库对事务的支持，没有数据库�
 
 Spring 的**默认传播行为是 PROPAGATION_REQUIRED**，即如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。
 
-事务传播机制是使用 **[ThreadLocal](https://javabetter.cn/thread/ThreadLocal.html)** 实现的，所以，如果调用的方法是在新线程中，事务传播会失效。
+**事务传播机制是使用 [ThreadLocal](https://javabetter.cn/thread/ThreadLocal.html) 实现的，所以，如果调用的方法是在新线程中，事务传播会失效。**
 
 Spring 默认的事务传播行为是 PROPAFATION_REQUIRED，即如果多个 `ServiceX#methodX()` 都工作在事务环境下，且程序中存在这样的调用链 `Service1#method1()->Service2#method2()->Service3#method3()`，那么这 3 个服务类的 3 个方法都通过 Spring 的事务传播机制工作在同一个事务中。
 
