@@ -66,6 +66,12 @@
 
 ## 链表
 
+### 链表的数据结构定义
+
+![image-20250226112400153](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261124194.png)
+
+
+
 ### [ 206. 反转链表](https://leetcode.cn/problems/reverse-linked-list)
 
 给你单链表的头节点 `head` ，请你反转链表，并返回反转后的链表。
@@ -110,7 +116,7 @@
 
 给你二叉树的根节点 `root` ，返回其节点值的 **层序遍历** 。 （即逐层地，从左到右访问所有节点）。
 
-
+![image-20250226112201614](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261122718.png)
 
 
 
