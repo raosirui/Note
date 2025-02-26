@@ -34,7 +34,33 @@
 
 ![image-20250226105849220](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261058286.png)
 
+### [ 88. 合并两个有序数组](https://leetcode.cn/problems/merge-sorted-array)
 
+给你两个按 **非递减顺序** 排列的整数数组 `nums1` 和 `nums2`，另有两个整数 `m` 和 `n` ，分别表示 `nums1` 和 `nums2` 中的元素数目。
+
+请你 **合并** `nums2` 到 `nums1` 中，使合并后的数组同样按 **非递减顺序** 排列。
+
+**注意：**最终，合并后数组不应由函数返回，而是存储在数组 `nums1` 中。为了应对这种情况，`nums1` 的初始长度为 `m + n`，其中前 `m` 个元素表示应合并的元素，后 `n` 个元素为 `0` ，应忽略。`nums2` 的长度为 `n` 。
+
+![image-20250226154216543](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261542602.png)
+
+
+
+
+
+
+
+## 哈希
+
+### [ 1. 两数之和](https://leetcode.cn/problems/two-sum)
+
+给定一个整数数组 `nums` 和一个整数目标值 `target`，请你在该数组中找出 **和为目标值** *`target`* 的那 **两个** 整数，并返回它们的数组下标。
+
+你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。
+
+你可以按任意顺序返回答案。
+
+![image-20250226142413760](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261424819.png)
 
 
 
@@ -118,6 +144,50 @@
 
 ![image-20250226112201614](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261122718.png)
 
+### [ 103. 二叉树的锯齿形层次遍历](https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal)
+
+![image-20250226162931861](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261629970.png)
+
+
+
+### [ 236. 二叉树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree)
+
+给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+
+[百度百科](https://baike.baidu.com/item/最近公共祖先/8918834?fr=aladdin)中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（**一个节点也可以是它自己的祖先**）。”
+
+![image-20250226170246895](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261702957.png)
+
+
+
+
+
+
+
+
+
+
+
+## 栈和队列
+
+### [20. 有效的括号](https://leetcode.cn/problems/valid-parentheses)
+
+给定一个只包括 `'('`，`')'`，`'{'`，`'}'`，`'['`，`']'` 的字符串 `s` ，判断字符串是否有效。
+
+有效字符串需满足：
+
+1. 左括号必须用相同类型的右括号闭合。
+2. 左括号必须以正确的顺序闭合。
+3. 每个右括号都有一个对应的相同类型的左括号。
+
+![image-20250226155228283](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261552346.png)
+
+
+
+
+
+
+
 
 
 
@@ -152,7 +222,15 @@
 
 ![image-20250226101735516](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261017568.png)
 
+### [ 121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock)
 
+给定一个数组 `prices` ，它的第 `i` 个元素 `prices[i]` 表示一支给定股票第 `i` 天的价格。
+
+你只能选择 **某一天** 买入这只股票，并选择在 **未来的某一个不同的日子** 卖出该股票。设计一个算法来计算你所能获取的最大利润。
+
+返回你可以从这笔交易中获取的最大利润。如果你不能获取任何利润，返回 `0` 。
+
+![image-20250226153427672](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261534741.png)
 
 
 
@@ -170,23 +248,47 @@
 
 
 
+## 图论
+
+### [ 200. 岛屿数量](https://leetcode.cn/problems/number-of-islands)
+
+给你一个由 `'1'`（陆地）和 `'0'`（水）组成的的二维网格，请你计算网格中岛屿的数量。
+
+岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
+
+此外，你可以假设该网格的四条边均被水包围。
+
+![image-20250226142710893](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261427972.png)
+
+![image-20250226143549097](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261435282.png)
+
+
+
+## 二分查找
+
+### [ 33. 搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array)
+
+整数数组 `nums` 按升序排列，数组中的值 **互不相同** 。
+
+在传递给函数之前，`nums` 在预先未知的某个下标 `k`（`0 <= k < nums.length`）上进行了 **旋转**，使数组变为 `[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]`（下标 **从 0 开始** 计数）。例如， `[0,1,2,4,5,6,7]` 在下标 `3` 处经旋转后可能变为 `[4,5,6,7,0,1,2]` 。
+
+给你 **旋转后** 的数组 `nums` 和一个整数 `target` ，如果 `nums` 中存在这个目标值 `target` ，则返回它的下标，否则返回 `-1` 。
+
+你必须设计一个时间复杂度为 `O(log n)` 的算法解决此问题。
+
+![image-20250226144826996](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261448233.png)
 
 
 
 
 
+## 回溯
 
+### [46. 全排列](https://leetcode.cn/problems/permutations)
 
+给定一个不含重复数字的数组 `nums` ，返回其 *所有可能的全排列* 。你可以 **按任意顺序** 返回答案。
 
-
-
-
-
-
-
-
-
-
+![image-20250226152506190](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261525299.png)
 
 
 
