@@ -1,4 +1,4 @@
-# :fire:CodeTop
+# CodeTop:fire:
 
 ## 双指针滑动窗口
 
@@ -44,6 +44,112 @@
 
 ![image-20250226154216543](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261542602.png)
 
+### [ 54. 螺旋矩阵](https://leetcode.cn/problems/spiral-matrix)
+
+给你一个 `m` 行 `n` 列的矩阵 `matrix` ，请按照 **顺时针螺旋顺序** ，返回矩阵中的所有元素。
+
+![image-20250227105920542](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271059614.png)
+
+### [ 415. 字符串相加](https://leetcode.cn/problems/add-strings)
+
+给定两个字符串形式的非负整数 `num1` 和`num2` ，计算它们的和并同样以字符串形式返回。
+
+你不能使用任何內建的用于处理大整数的库（比如 `BigInteger`）， 也不能直接将输入的字符串转换为整数形式。
+
+![image-20250227113332531](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271133610.png)
+
+
+
+### [ 56. 合并区间](https://leetcode.cn/problems/merge-intervals)
+
+以数组 `intervals` 表示若干个区间的集合，其中单个区间为 `intervals[i] = [starti, endi]` 。请你合并所有重叠的区间，并返回 *一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间* 。
+
+![image-20250227140510597](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271405179.png)
+
+### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water)
+
+给定 `n` 个非负整数表示每个宽度为 `1` 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+
+![image-20250227141245577](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271412748.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -61,6 +167,60 @@
 你可以按任意顺序返回答案。
 
 ![image-20250226142413760](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261424819.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -90,6 +250,66 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 链表
 
 ### 链表的数据结构定义
@@ -112,6 +332,12 @@
 
 ![image-20250225211112361](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502252111412.png)
 
+### [92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii)
+
+给你单链表的头指针 `head` 和两个整数 `left` 和 `right` ，其中 `left <= right` 。请你反转从位置 `left` 到位置 `right` 的链表节点，返回 **反转后的链表** 。
+
+![image-20250227105248387](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271052461.png)
+
 
 
 
@@ -125,6 +351,110 @@
 你不能只是单纯的改变节点内部的值，而是需要实际进行节点交换。
 
 ![image-20250226095407342](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502260954438.png)
+
+
+
+### [ 141. 环形链表](https://leetcode.cn/problems/linked-list-cycle)
+
+给你一个链表的头节点 `head` ，判断链表中是否有环。
+
+如果链表中有某个节点，可以通过连续跟踪 `next` 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 `pos` 来表示链表尾连接到链表中的位置（索引从 0 开始）。**注意：`pos` 不作为参数进行传递** 。仅仅是为了标识链表的实际情况。
+
+*如果链表中存在环* ，则返回 `true` 。 否则，返回 `false` 。
+
+![image-20250227103949920](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271227143.png)
+
+
+
+### [ 160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists)
+
+![image-20250227122709146](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271228474.png)
+
+
+
+
+
+### [ 143. 重排链表](https://leetcode.cn/problems/reorder-list)
+
+给定一个单链表 `L` 的头节点 `head` ，单链表 `L` 表示为：
+
+```
+L0 → L1 → … → Ln - 1 → Ln
+```
+
+请将其重新排列后变为：
+
+```
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+```
+
+不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+
+![image-20250227134300378](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271343455.png)
+
+
+
+
+
+### [ 142. 环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii)
+
+给定一个链表的头节点  `head` ，返回链表开始入环的第一个节点。 *如果链表无环，则返回 `null`。*
+
+如果链表中有某个节点，可以通过连续跟踪 `next` 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 `pos` 来表示链表尾连接到链表中的位置（**索引从 0 开始**）。如果 `pos` 是 `-1`，则在该链表中没有环。**注意：`pos` 不作为参数进行传递**，仅仅是为了标识链表的实际情况。
+
+**不允许修改** 链表。
+
+![image-20250227141947551](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271419705.png)
+
+
+
+### [19. 删除链表的倒数第N个节点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list)
+
+给你一个链表，删除链表的倒数第 `n` 个结点，并且返回链表的头结点。
+
+![image-20250227154007626](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271540726.png)
+
+
+
+### [82. 删除排序链表中的重复元素](https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii)
+
+给定一个已排序的链表的头 `head` ， *删除原始链表中所有重复数字的节点，只留下不同的数字* 。返回 *已排序的链表* 。
+
+![image-20250227155612387](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271556494.png)
+
+![image-20250227160214256](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271602442.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -157,6 +487,64 @@
 [百度百科](https://baike.baidu.com/item/最近公共祖先/8918834?fr=aladdin)中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（**一个节点也可以是它自己的祖先**）。”
 
 ![image-20250226170246895](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261702957.png)
+
+
+
+### [124. 二叉树中的最大路径和](https://leetcode.cn/problems/binary-tree-maximum-path-sum)
+
+二叉树中的 **路径** 被定义为一条节点序列，序列中每对相邻节点之间都存在一条边。同一个节点在一条路径序列中 **至多出现一次** 。该路径 **至少包含一个** 节点，且不一定经过根节点。
+
+**路径和** 是路径中各节点值的总和。
+
+给你一个二叉树的根节点 `root` ，返回其 **最大路径和** 。
+
+![image-20250227143533347](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271435536.png)
+
+
+
+### [ 94. 二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal)
+
+给定一个二叉树的根节点 `root` ，返回 *它的 **中序** 遍历* 。
+
+![image-20250227160530994](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271605152.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -194,6 +582,64 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 堆
 
 ### [ 215. 数组中的第K个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array)
@@ -205,6 +651,66 @@
 你必须设计并实现时间复杂度为 O(n) 的算法解决此问题。
 
 ![image-20250225211641294](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502252116355.png)
+
+### [ 23. 合并K个排序链表](https://leetcode.cn/problems/merge-k-sorted-lists)
+
+给你一个链表数组，每个链表都已经按升序排列。
+
+请你将所有链表合并到一个升序链表中，返回合并后的链表。
+
+![image-20250227111748114](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271117209.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -234,6 +740,76 @@
 
 
 
+### [ 300. 最长上升子序列](https://leetcode.cn/problems/longest-increasing-subsequence)
+
+给你一个整数数组 `nums` ，找到其中最长严格递增子序列的长度。
+
+**子序列** 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，`[3,6,2,7]` 是数组 `[0,3,1,6,2,2,7]` 的子序列。
+
+![image-20250227112233147](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271122213.png)
+
+
+
+### [72. 编辑距离](https://leetcode.cn/problems/edit-distance)
+
+给你两个单词 `word1` 和 `word2`， *请返回将 `word1` 转换成 `word2` 所使用的最少操作数* 。
+
+你可以对一个单词进行如下三种操作：
+
+- 插入一个字符
+- 删除一个字符
+- 替换一个字符
+
+![image-20250227142944718](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271429834.png)
+
+
+
+
+
+### [ 1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence)
+
+给定两个字符串 `text1` 和 `text2`，返回这两个字符串的最长 **公共子序列** 的长度。如果不存在 **公共子序列** ，返回 `0` 。
+
+一个字符串的 **子序列** 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。
+
+- 例如，`"ace"` 是 `"abcde"` 的子序列，但 `"aec"` 不是 `"abcde"` 的子序列。
+
+两个字符串的 **公共子序列** 是这两个字符串所共同拥有的子序列。
+
+![image-20250227153824147](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271538257.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 排序
 
 ### [ 补充题4. 手撕快速排序](https://leetcode.cn/problems/sort-an-array)
@@ -243,6 +819,56 @@
 你必须在 **不使用任何内置函数** 的情况下解决问题，时间复杂度为 `O(nlog(n))`，并且空间复杂度尽可能小。
 
 ![image-20250226103151324](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261031419.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -264,7 +890,87 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 二分查找
+
+### [704. 二分查找](https://leetcode.cn/problems/binary-search)
+
+![image-20250227160720118](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271607239.png)
+
+
+
+
 
 ### [ 33. 搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array)
 
@@ -282,6 +988,80 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 回溯
 
 ### [46. 全排列](https://leetcode.cn/problems/permutations)
@@ -292,11 +1072,17 @@
 
 
 
+### [93. 复原IP地址](https://leetcode.cn/problems/restore-ip-addresses)
 
+**有效 IP 地址** 正好由四个整数（每个整数位于 `0` 到 `255` 之间组成，且不能含有前导 `0`），整数之间用 `'.'` 分隔。
 
+- 例如：`"0.1.2.201"` 和` "192.168.1.1"` 是 **有效** IP 地址，但是 `"0.011.255.245"`、`"192.168.1.312"` 和 `"192.168@1.1"` 是 **无效** IP 地址。
 
+给定一个只包含数字的字符串 `s` ，用以表示一个 IP 地址，返回所有可能的**有效 IP 地址**，这些地址可以通过在 `s` 中插入 `'.'` 来形成。你 **不能** 重新排序或删除 `s` 中的任何数字。你可以按 **任何** 顺序返回答案。
 
+![image-20250227145016289](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271450402.png)
 
+![image-20250227150039760](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271500861.png)
 
 
 
