@@ -119,7 +119,7 @@ public User selectUser(Map<String, Object> params);
 - `\#{}`里面的名称**对应的是 Map 里面的 key 名称**。
 - 这种方法适合传递多个参数，且参数易变能灵活传递的情况。
 
-**方法 4：Java Bean 传参法**
+**方法 4：Java Bean 传参法**:white_check_mark:
 
 ```xml
 public User selectUser(User user);
