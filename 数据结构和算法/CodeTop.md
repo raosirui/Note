@@ -74,7 +74,13 @@
 
 
 
+### [334. 递增的三元子序列](https://leetcode.cn/problems/increasing-triplet-subsequence)
 
+给你一个整数数组 `nums` ，判断这个数组中是否存在长度为 `3` 的递增子序列。
+
+如果存在这样的三元组下标 `(i, j, k)` 且满足 `i < j < k` ，使得 `nums[i] < nums[j] < nums[k]` ，返回 `true` ；否则，返回 `false` 
+
+![image-20250301173346857](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503011733094.png)
 
 
 
@@ -793,7 +799,13 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+### [152. 乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray)
 
+给你一个整数数组 `nums` ，请你找出数组中乘积最大的非空连续 子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。
+
+测试用例的答案是一个 **32-位** 整数。
+
+![image-20250301164605367](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503011646500.png)
 
 
 
