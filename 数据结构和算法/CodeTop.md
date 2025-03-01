@@ -570,7 +570,18 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 ![image-20250226155228283](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261552346.png)
 
+### [ 232. 用栈实现队列](https://leetcode.cn/problems/implement-queue-using-stacks)
 
+请你仅使用两个栈实现先入先出队列。队列应当支持一般队列支持的所有操作（`push`、`pop`、`peek`、`empty`）：
+
+实现 `MyQueue` 类：
+
+- `void push(int x)` 将元素 x 推到队列的末尾
+- `int pop()` 从队列的开头移除并返回元素
+- `int peek()` 返回队列开头的元素
+- `boolean empty()` 如果队列为空，返回 `true` ；否则，返回 `false`
+
+![image-20250228210803893](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502282108089.png)
 
 
 
