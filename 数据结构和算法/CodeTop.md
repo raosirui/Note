@@ -546,6 +546,18 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+### [226. 翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/)
+
+给你一棵二叉树的根节点 `root` ，翻转这棵二叉树，并返回其根节点。
+
+![image-20250306132211382](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061322576.png)
+
+
+
+
+
+
+
 ### [101. 对称二叉树](https://leetcode.cn/problems/symmetric-tree/)
 
 给你一个二叉树的根节点 `root` ， 检查它是否轴对称。
@@ -556,7 +568,37 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+### [104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
 
+给定一个二叉树 `root` ，返回其最大深度。
+
+二叉树的 **最大深度** 是指从根节点到最远叶子节点的最长路径上的节点数。
+
+![image-20250306133923656](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061339783.png)
+
+### [559. N 叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-n-ary-tree/)
+
+给定一个 N 叉树，找到其最大深度。
+
+最大深度是指从根节点到最远叶子节点的最长路径上的节点总数。
+
+N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（请参见示例）。
+
+![image-20250306134632262](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061346376.png)
+
+
+
+### [111. 二叉树的最小深度](https://leetcode.cn/problems/minimum-depth-of-binary-tree/)
+
+给定一个二叉树，找出其最小深度。
+
+最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+
+**说明：**叶子节点是指没有子节点的节点。
+
+![image-20250306140801415](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061408577.png)
+
+![image-20250306141055180](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061410304.png)
 
 
 
@@ -1162,11 +1204,29 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 ## 回溯
 
+### 回溯模板
+
+![image-20250306145536323](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061455464.png)
+
+
+
 ### [46. 全排列](https://leetcode.cn/problems/permutations)
 
 给定一个不含重复数字的数组 `nums` ，返回其 *所有可能的全排列* 。你可以 **按任意顺序** 返回答案。
 
 ![image-20250226152506190](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502261525299.png)
+
+### [47. 全排列 II](https://leetcode.cn/problems/permutations-ii/)
+
+给定一个可包含重复数字的序列 `nums` ，***按任意顺序*** 返回所有不重复的全排列。
+
+![image-20250306193932350](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061939506.png)
+
+
+
+
+
+
 
 
 
@@ -1184,9 +1244,13 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+### [77. 组合](https://leetcode.cn/problems/combinations/)
 
+给定两个整数 `n` 和 `k`，返回范围 `[1, n]` 中所有可能的 `k` 个数的组合。
 
+你可以按 **任何顺序** 返回答案。
 
+![image-20250306153644317](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061536476.png)
 
 
 
