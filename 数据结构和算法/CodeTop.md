@@ -64,7 +64,11 @@
 
 以数组 `intervals` 表示若干个区间的集合，其中单个区间为 `intervals[i] = [starti, endi]` 。请你合并所有重叠的区间，并返回 *一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间* 。
 
-![image-20250227140510597](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271405179.png)
+![image-20250304130629620](C:/Users/raosirui/AppData/Roaming/Typora/typora-user-images/image-20250304130629620.png)
+
+
+
+
 
 ### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water)
 
@@ -106,11 +110,17 @@
 
 
 
+### [151. 翻转字符串里的单词](https://leetcode.cn/problems/reverse-words-in-a-string)
 
+给你一个字符串 `s` ，请你反转字符串中 **单词** 的顺序。
 
+**单词** 是由非空格字符组成的字符串。`s` 中使用至少一个空格将字符串中的 **单词** 分隔开。
 
+返回 **单词** 顺序颠倒且 **单词** 之间用单个空格连接的结果字符串。
 
+**注意：**输入字符串 `s`中可能会存在前导空格、尾随空格或者单词间的多个空格。返回的结果字符串中，单词间应当仅用单个空格分隔，且不包含任何额外的空格。
 
+![image-20250303195628106](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503031956237.png)
 
 
 
@@ -448,7 +458,11 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+### [234. 回文链表](https://leetcode.cn/problems/palindrome-linked-list)
 
+给你一个单链表的头节点 `head` ，请你判断该链表是否为回文链表。如果是，返回 `true` ；否则，返回 `false` 。
+
+![image-20250303172916589](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503031729797.png)
 
 
 
@@ -532,7 +546,11 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+### [101. 对称二叉树](https://leetcode.cn/problems/symmetric-tree/)
 
+给你一个二叉树的根节点 `root` ， 检查它是否轴对称。
+
+![image-20250306114544299](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061145417.png)
 
 
 
@@ -607,19 +625,34 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+### [150. 逆波兰表达式求值](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
+
+给你一个字符串数组 `tokens` ，表示一个根据 [逆波兰表示法](https://baike.baidu.com/item/逆波兰式/128437) 表示的算术表达式。
+
+请你计算该表达式。返回一个表示表达式值的整数。
+
+**注意：**
+
+- 有效的算符为 `'+'`、`'-'`、`'*'` 和 `'/'` 。
+- 每个操作数（运算对象）都可以是一个整数或者另一个表达式。
+- 两个整数之间的除法总是 **向零截断** 。
+- 表达式中不含除零运算。
+- 输入是一个根据逆波兰表示法表示的算术表达式。
+- 答案及所有中间计算结果可以用 **32 位** 整数表示。
+
+![image-20250306102118109](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061021262.png)
 
 
 
 
 
+### [239. 滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)
 
+给你一个整数数组 `nums`，有一个大小为 `k` 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 `k` 个数字。滑动窗口每次只向右移动一位。
 
+返回 *滑动窗口中的最大值* 。
 
-
-
-
-
-
+![image-20250306105642369](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061056503.png)
 
 
 
@@ -697,6 +730,12 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+### [347. 前 K 个高频元素](https://leetcode.cn/problems/top-k-frequent-elements/)
+
+给你一个整数数组 `nums` 和一个整数 `k` ，请你返回其中出现频率前 `k` 高的元素。你可以按 **任意顺序** 返回答案。
+
+![image-20250306112421609](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061124746.png)
+
 
 
 
@@ -751,6 +790,18 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 ## 动态规划
 
+### DP五部曲
+
+1. **dp数组以及下表的含义**
+2. **递推公式**
+3. **dp数组如何初始化**
+4. **遍历顺序**
+5. **打印数组调试**
+
+
+
+
+
 ### [ 53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray)
 
 给你一个整数数组 `nums` ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
@@ -775,7 +826,7 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 给你一个整数数组 `nums` ，找到其中最长严格递增子序列的长度。
 
-**子序列** 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，`[3,6,2,7]` 是数组 `[0,3,1,6,2,2,7]` 的子序列。
+**子序列** 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，`[3,6,2,7]` 是数组 `[0,3,1,6,2,2,7]` 的子序列。 
 
 ![image-20250227112233147](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271122213.png)
 
@@ -824,6 +875,14 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+
+### [ 70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs)
+
+假设你正在爬楼梯。需要 `n` 阶你才能到达楼顶。
+
+每次你可以爬 `1` 或 `2` 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+
+![image-20250303172408283](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503031724397.png)
 
 
 
@@ -1025,13 +1084,15 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+### [ 4. 寻找两个正序数组的中位数](https://leetcode.cn/problems/median-of-two-sorted-arrays)
 
+给定两个大小分别为 `m` 和 `n` 的正序（从小到大）数组 `nums1` 和 `nums2`。请你找出并返回这两个正序数组的 **中位数** 。
 
+算法的时间复杂度应该为 `O(log (m+n))` 。
 
+![image-20250304085154918](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503040852059.png)
 
-
-
-
+![image-20250304085718339](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503040857452.png)
 
 
 
