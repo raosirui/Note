@@ -1254,11 +1254,11 @@ N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（
 
 
 
+### [131. 分割回文串](https://leetcode.cn/problems/palindrome-partitioning/)
 
+给你一个字符串 `s`，请你将 `s` 分割成一些 子串，使每个子串都是 **回文串** 。返回 `s` 所有可能的分割方案。
 
-
-
-
+![image-20250306205706050](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503062057230.png)
 
 
 
