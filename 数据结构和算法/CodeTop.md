@@ -1,5 +1,21 @@
 # CodeTop:fire:
 
+## ACM模式
+
+### 整数输入 Scanner
+
+![image-20250307173232177](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503071732402.png)
+
+### 字符串输入 BufferedReader
+
+![image-20250307172852289](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503071728424.png)
+
+
+
+
+
+
+
 ## 双指针滑动窗口
 
 ### [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters)
@@ -200,11 +216,13 @@
 
 
 
+### [128. 最长连续序列](https://leetcode.cn/problems/longest-consecutive-sequence/)
 
+给定一个未排序的整数数组 `nums` ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
 
+请你设计并实现时间复杂度为 `O(n)` 的算法解决此问题。
 
-
-
+![image-20250308103125509](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503081031627.png)
 
 
 
@@ -468,9 +486,25 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
 
 
+### [328. 奇偶链表](https://leetcode.cn/problems/odd-even-linked-list/)
+
+给定单链表的头节点 `head` ，将所有索引为奇数的节点和索引为偶数的节点分别组合在一起，然后返回重新排序的列表。
+
+**第一个**节点的索引被认为是 **奇数** ， **第二个**节点的索引为 **偶数** ，以此类推。
+
+请注意，偶数组和奇数组内部的相对顺序应该与输入时保持一致。
+
+你必须在 `O(1)` 的额外空间复杂度和 `O(n)` 的时间复杂度下解决这个问题。
+
+![image-20250308094759548](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503080947687.png)
 
 
 
+### [字节跳动. 排序奇升偶降链表](https://mp.weixin.qq.com/s/0WVa2wIAeG0nYnVndZiEXQ)
+
+1->4->3->2->5 给定一个链表奇数部分递增，偶数部分递减，要求时间O(n)空间O(1)内将链表变成递增
+
+![image-20250308101347073](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503081013308.png)
 
 
 
@@ -683,6 +717,24 @@ N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（
 - 答案及所有中间计算结果可以用 **32 位** 整数表示。
 
 ![image-20250306102118109](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503061021262.png)
+
+
+
+
+
+### [227. 基本计算器 II](https://leetcode.cn/problems/basic-calculator-ii/)
+
+给你一个字符串表达式 `s` ，请你实现一个基本计算器来计算并返回它的值。
+
+整数除法仅保留整数部分。
+
+你可以假设给定的表达式总是有效的。所有中间结果将在 `[-231, 231 - 1]` 的范围内。
+
+**注意：**不允许使用任何将字符串作为数学表达式计算的内置函数，比如 `eval()` 。
+
+![image-20250308113250011](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503081132144.png)
+
+
 
 
 
@@ -1105,6 +1157,22 @@ N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（
 ### [704. 二分查找](https://leetcode.cn/problems/binary-search)
 
 ![image-20250227160720118](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271607239.png)
+
+
+
+### [162. 寻找峰值](https://leetcode.cn/problems/find-peak-element/)
+
+峰值元素是指其值严格大于左右相邻值的元素。
+
+给你一个整数数组 `nums`，找到峰值元素并返回其索引。数组可能包含多个峰值，在这种情况下，返回 **任何一个峰值** 所在位置即可。
+
+你可以假设 `nums[-1] = nums[n] = -∞` 。
+
+你必须实现时间复杂度为 `O(log n)` 的算法来解决此问题。
+
+![image-20250308144434464](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503081444601.png)
+
+
 
 
 

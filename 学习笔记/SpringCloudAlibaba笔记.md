@@ -2200,6 +2200,14 @@ seata:
 
 #### 7.2.1、RabbitMQ架构
 
+> [!IMPORTANT]
+>
+> **引入交换机最大的作用是：解耦生产者**
+>
+> **如果生产者直接指定队列，任何队列的变更（如添加或删除）都需要修改生产者的代码，这样系统耦合度高，维护成本大**。
+>
+> **交换机允许动态绑定多个队列，消费者可以随时扩展或缩减，而不影响生产者。**
+
 RabbitMQ是基于Erlang语言开发的开源消息通信中间件，官网地址：https://www.rabbitmq.com/
 
 <img src="https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202411091925909.png" alt="image-20241102103435541" style="zoom:50%;" />
