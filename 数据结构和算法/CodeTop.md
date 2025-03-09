@@ -1334,7 +1334,69 @@ N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（
 
 
 
+## 线程
 
+1. 三个线程分别打印 A，B，C，要求这三个线程一起运行，打印 n 次，输出形如“ABCABCABC....”的字符串
+2. 两个线程交替打印 0~100 的奇偶数
+3. 通过 N 个线程顺序循环打印从 0 至 100
+4. 多线程按顺序调用，A->B->C，AA 打印 5 次，BB 打印10 次，CC 打印 15 次，重复 10 次
+5. 用两个线程，一个输出字母，一个输出数字，交替输出 1A2B3C4D...26Z
+
+
+
+```java
+public class ABCPrinter {
+    private static final Object lock = new Object();
+    private static int count = 0;
+
+    public static void main(String[] args) {
+        Thread threadA = new Thread(new Printer("A"));
+        Thread threadB = new Thread(new Printer("B"));
+        Thread threadC = new Thread(new Printer("C"));
+        
+        threadA.start();
+        threadB.start();
+        threadC.start();
+    }
+
+    static class Printer implements Runnable {
+        private String letter;
+
+        Printer(String letter) {
+            this.letter = letter;
+        }
+
+        @Override
+        public void run() {
+            while (count < 100) {
+                synchronized (lock) {
+                    if ((count % 3) == getLetterIndex(letter)) {
+                        System.out.print(letter);
+                        count++;
+                        lock.notifyAll(); // 唤醒其他线程
+                    } else {
+                        try {
+                            lock.wait(); // 等待
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+
+        private int getLetterIndex(String letter) {
+            switch (letter) {
+                case "A": return 0;
+                case "B": return 1;
+                case "C": return 2;
+                default: return -1;
+            }
+        }
+    }
+}
+
+```
 
 
 
