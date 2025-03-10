@@ -14,6 +14,82 @@
 
 
 
+## 单例
+
+### 1、饿汉式
+
+在类加载时候就进行实例化
+
+```java
+// 单例模式 饿汉式
+class Singleton {
+    // 在类加载时候就进行实例化
+    private static Singleton singleton=new Singleton();
+    private Singleton(){}
+
+    public static Singleton getInstance(){
+        return singleton;
+    }
+}
+```
+
+### 2、懒汉式
+
+在类加载时不进行实例化，在第一次使用时候再进行实例化
+
+```java
+// 单例模式 懒汉式
+class Singleton {
+    private static Singleton singleton;
+    private Singleton() {}
+
+    // 加锁保证单例只会被实例化一次
+    public synchronized static Singleton getInstance() {
+        // 第一次使用时候再进行实例化
+        if (singleton == null) {
+            singleton = new Singleton();
+        }
+        return singleton;
+    }
+}
+```
+
+### 3、双重检查锁
+
+懒汉式中同步处理时synchronized范围为整个方法，但实例化仅仅发生在第一次一旦实例化后，下次判断就不可能为空了，就不会进行实例化了，但还会进行同步块。所以可以减小同步范围
+
+```java
+class Singleton {
+    // 使用 volatile 确保实例变量的可见性和防止指令重排序
+    private volatile static Singleton singleton;
+    // 私有化构造器，防止外部直接实例化
+    private Singleton() {}
+
+    // 提供全局访问点
+    public static Singleton getInstance() {
+        if (singleton == null) { // 第一次检查
+            synchronized (Singleton.class) {
+                if (singleton == null) { // 第二次检查
+                    singleton = new Singleton();
+                }
+            }
+        }
+        return singleton;
+    }
+}
+```
+
+
+
+- **懒汉式**的缺点是每次获取实例时都会进行同步，导致在高并发场景下性能较差。而 **双重检查锁** 通过减少同步的次数（仅在第一次创建实例时才同步），显著提升了性能。
+- **懒汉式**相对简单，但可能会引发线程安全问题，特别是在没有同步的情况下，多个线程可能会并发创建多个实例。 **双重检查锁** 使用了 `volatile` 关键字，保证了实例初始化的线程安全。
+
+
+
+
+
+
+
 
 
 ## 双指针滑动窗口
@@ -402,6 +478,8 @@
 
 
 
+
+
 ### [ 141. 环形链表](https://leetcode.cn/problems/linked-list-cycle)
 
 给你一个链表的头节点 `head` ，判断链表中是否有环。
@@ -411,6 +489,26 @@
 *如果链表中存在环* ，则返回 `true` 。 否则，返回 `false` 。
 
 ![image-20250227103949920](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271227143.png)
+
+
+
+
+
+### [ 142. 环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii)
+
+给定一个链表的头节点  `head` ，返回链表开始入环的第一个节点。 *如果链表无环，则返回 `null`。*
+
+如果链表中有某个节点，可以通过连续跟踪 `next` 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 `pos` 来表示链表尾连接到链表中的位置（**索引从 0 开始**）。如果 `pos` 是 `-1`，则在该链表中没有环。**注意：`pos` 不作为参数进行传递**，仅仅是为了标识链表的实际情况。
+
+**不允许修改** 链表。
+
+![image-20250227141947551](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271419705.png)
+
+数学推导是x+y=k*l，其中右边是k圈的意思，其实龟兔只要保证一个快一个慢，不管几步都行。
+
+
+
+
 
 
 
@@ -441,18 +539,6 @@ L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 ![image-20250227134300378](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271343455.png)
 
 
-
-
-
-### [ 142. 环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii)
-
-给定一个链表的头节点  `head` ，返回链表开始入环的第一个节点。 *如果链表无环，则返回 `null`。*
-
-如果链表中有某个节点，可以通过连续跟踪 `next` 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 `pos` 来表示链表尾连接到链表中的位置（**索引从 0 开始**）。如果 `pos` 是 `-1`，则在该链表中没有环。**注意：`pos` 不作为参数进行传递**，仅仅是为了标识链表的实际情况。
-
-**不允许修改** 链表。
-
-![image-20250227141947551](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271419705.png)
 
 
 
