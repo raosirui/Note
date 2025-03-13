@@ -1418,6 +1418,34 @@ N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（
 
 
 
+### [79. 单词搜索](https://leetcode.cn/problems/word-search/)
+
+给定一个 `m x n` 二维字符网格 `board` 和一个字符串单词 `word` 。如果 `word` 存在于网格中，返回 `true` ；否则，返回 `false` 。
+
+单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
+
+![image-20250311151855867](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503111518092.png)
+
+
+
+
+
+### [22. 括号生成](https://leetcode.cn/problems/generate-parentheses/)
+
+数字 `n` 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 **有效的** 括号组合。
+
+![image-20250313114337326](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503131143529.png)
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 线程

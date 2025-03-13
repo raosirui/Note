@@ -75,7 +75,7 @@ Java 采用的是**共享内存**的并发模型。这个模型被称为 Java �
 
 > [!IMPORTANT]
 >
-> **线程的创建实际上三种方法都是实现了创建 Thread 对象，然后将代传参数传递给 Thread 对象，然后调用 `start()` 方法启动线程，区别是继承Thread类只能单继承，实现Runnable接口可以实现多个接口，而实现Callable接口可以获取线程的返回值**
+> **线程的创建实际上三种方法：继承Thread类、实现Runnable接口、实现Callable接口，三种方式都是实现了创建 Thread 对象，然后将代传参数传递给 Thread 对象，然后调用 `start()` 方法启动线程，区别是继承Thread类只能单继承，实现Runnable接口可以实现多个接口，而实现Callable接口可以获取线程的返回值**
 
 
 
