@@ -216,9 +216,16 @@ class Singleton {
 
 
 
+### [27. 移除元素](https://leetcode.cn/problems/remove-element/)
 
+给你一个数组 `nums` 和一个值 `val`，你需要 **[原地](https://baike.baidu.com/item/原地算法)** 移除所有数值等于 `val` 的元素。元素的顺序可能发生改变。然后返回 `nums` 中与 `val` 不同的元素的数量。
 
+假设 `nums` 中不等于 `val` 的元素数量为 `k`，要通过此题，您需要执行以下操作：
 
+- 更改 `nums` 数组，使 `nums` 的前 `k` 个元素包含不等于 `val` 的元素。`nums` 的其余元素和 `nums` 的大小并不重要。
+- 返回 `k`。
+
+![image-20250314155705894](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503141557048.png)
 
 
 
@@ -1242,7 +1249,7 @@ N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（
 
 ### [704. 二分查找](https://leetcode.cn/problems/binary-search)
 
-![image-20250227160720118](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202502271607239.png)
+![image-20250314153256887](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202503141532066.png)
 
 
 
