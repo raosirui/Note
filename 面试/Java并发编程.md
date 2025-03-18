@@ -1567,9 +1567,9 @@ Exchanger 可以用于**遗传算法**
 
 
 
+### ConcurrentHashMap
 
-
-### 能说一下 ConcurrentHashMap 的实现吗？
+#### 能说一下 ConcurrentHashMap 的实现吗？
 
 在 JDK 7 时采用的是**分段锁机制**（Segment Locking），整个 Map 被分为若干段，每个段都可以独立地加锁。因此，不同的线程可以同时操作不同的段，从而实现并发访问。![初念初恋：JDK 7 ConcurrentHashMap](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202412180934375.png)
 
@@ -1577,7 +1577,7 @@ Exchanger 可以用于**遗传算法**
 
 [![初念初恋：JDK 8 ConcurrentHashMap](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202412180934462.png)](https://camo.githubusercontent.com/41ce1350bca68065c0ab736c990b1854691f809c515c8c971c0ba8f3c4c44ede/68747470733a2f2f63646e2e746f62656265747465726a61766165722e636f6d2f73747574796d6f72652f6d61702d32303233303831363135353932342e706e67)
 
-- 对于**读操作**，通常不需要加锁，可以直接读取，ConcurrentHashMap 内部使用了 **volatile** 变量来保证内存可见性。
+- 对于**读操作**，**通常不需要加锁**，可以直接读取，ConcurrentHashMap 内部使用了 **volatile** 变量来保证内存可见性。
 - 对于**写操作**，ConcurrentHashMap 使用 **CAS** 操作来实现无锁的更新，这是一种乐观锁的实现，因为它假设没有冲突发生，在实际更新数据时才检查是否有其他线程在尝试修改数据，如果有，采用悲观的锁策略，如 synchronized 代码块来保证数据的一致性。
 
 
@@ -1607,6 +1607,8 @@ ConcurrentHashMap 的 put 流程和 HashMap 非常类似，只不过是先定位
 **②、get 流程**
 
 get 也很简单，通过 `hash(key)` 定位到 segment，再遍历链表定位到具体的元素上，需要注意的是 value 是 [volatile 的](https://javabetter.cn/thread/volatile.html)，所以 **get 是不需要加锁的**。
+
+
 
 
 

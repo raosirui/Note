@@ -1471,58 +1471,36 @@ N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（
 
 
 
+### 线程交替循环打印ABC
+
 ```java
-public class ABCPrinter {
+public class PrintABC {
     private static final Object lock = new Object();
-    private static int count = 0;
+    private static int state = 0; // 0:A, 1:B, 2:C
 
     public static void main(String[] args) {
-        Thread threadA = new Thread(new Printer("A"));
-        Thread threadB = new Thread(new Printer("B"));
-        Thread threadC = new Thread(new Printer("C"));
-        
-        threadA.start();
-        threadB.start();
-        threadC.start();
+        new Thread(() -> printLetter("A", 0)).start();
+        new Thread(() -> printLetter("B", 1)).start();
+        new Thread(() -> printLetter("C", 2)).start();
     }
 
-    static class Printer implements Runnable {
-        private String letter;
-
-        Printer(String letter) {
-            this.letter = letter;
-        }
-
-        @Override
-        public void run() {
-            while (count < 100) {
-                synchronized (lock) {
-                    if ((count % 3) == getLetterIndex(letter)) {
-                        System.out.print(letter);
-                        count++;
-                        lock.notifyAll(); // 唤醒其他线程
-                    } else {
-                        try {
-                            lock.wait(); // 等待
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+    private static void printLetter(String letter, int targetState) {
+        for (int i = 0; i < 10; i++) { // 每个线程循环打印 10 次
+            synchronized (lock) { // 加锁，确保线程同步
+                while (state % 3 != targetState) { 
+                    try {
+                        lock.wait(); // 让出 CPU，等待被唤醒
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
                     }
                 }
-            }
-        }
-
-        private int getLetterIndex(String letter) {
-            switch (letter) {
-                case "A": return 0;
-                case "B": return 1;
-                case "C": return 2;
-                default: return -1;
+                System.out.print(letter); // 打印当前线程的字母
+                state++; // 修改状态，让下一个线程执行
+                lock.notifyAll(); // 唤醒所有等待线程
             }
         }
     }
 }
-
 ```
 
 
@@ -1531,9 +1509,115 @@ public class ABCPrinter {
 
 
 
+### 两个线程交替打印 0~100 的奇偶数
 
 
 
+```java
+public class PrintOddEven {
+    private static final Object lock = new Object();
+    private static int num = 0;
+
+    public static void main(String[] args) {
+        new Thread(() -> print(1), "奇数线程").start();
+        new Thread(() -> print(0), "偶数线程").start();
+    }
+
+    private static void print(int remainder) {
+        while (num <= 100) {
+            synchronized (lock) {
+                if (num % 2 != remainder) { // 不是当前线程要打印的数
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException ignored) {}
+                }
+                if (num <= 100) {
+                    System.out.println(Thread.currentThread().getName() + "：" + num++);
+                    lock.notify();
+                }
+            }
+        }
+    }
+}
+```
+
+
+
+
+
+
+
+## 编解码
+
+
+
+
+
+
+
+
+
+## 随机数
+
+### 洗牌算法
+
+工行有30万员工，现在要均匀抽出1万员工发奖品，提供一个16位的随机数生成器函数 rand16() 可供随意调用，请用java写一个函数 selectLuckyStaffs() 实现这个功能。
+
+```java
+import java.util.Random;
+
+public class LuckyDraw {
+    private static final int TOTAL_EMPLOYEES = 300000; // 总员工数
+    private static final int WINNERS = 10000; // 中奖人数
+
+    // 提供的随机数生成器，返回一个 16 位随机整数
+    public static int rand16() {
+        Random random = new Random();
+        return random.nextInt(1 << 16); // 生成 0 ~ 65535 之间的随机数
+    }
+
+    // 均匀抽取1万名员工
+    public static int[] selectLuckyStaffs() {
+        int[] staffs = new int[TOTAL_EMPLOYEES];
+        for (int i = 0; i < TOTAL_EMPLOYEES; i++) {
+            staffs[i] = i;
+        }
+
+        // Fisher-Yates 洗牌算法，仅打乱前 10000 个位置
+        Random rand = new Random();
+        for (int i = 0; i < WINNERS; i++) {
+            int j = i + rand.nextInt(TOTAL_EMPLOYEES - i); // 在 [i, TOTAL_EMPLOYEES-1] 之间取随机索引
+            swap(staffs, i, j);
+        }
+
+        // 取前 10000 名员工
+        int[] winners = new int[WINNERS];
+        System.arraycopy(staffs, 0, winners, 0, WINNERS);
+        return winners;
+    }
+
+    // 交换数组中的两个元素
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    public static void main(String[] args) {
+        int[] luckyStaffs = selectLuckyStaffs();
+        System.out.println("中奖员工编号（部分展示）:");
+        for (int i = 0; i < 20; i++) { // 只展示前 20 个中奖员工编号
+            System.out.print(luckyStaffs[i] + " ");
+        }
+    }
+}
+```
+
+**时间复杂度：** O(N)（遍历 + Fisher-Yates 洗牌）
+
+**空间复杂度：** O(N)（存储员工编号数组）
+
+**均匀性：** 由于 Fisher-Yates 算法的随机交换，最终 10000 名中奖员工的分布是均匀的。
 
 
 
