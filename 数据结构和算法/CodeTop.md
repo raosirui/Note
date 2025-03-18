@@ -1511,8 +1511,6 @@ public class PrintABC {
 
 ### 两个线程交替打印 0~100 的奇偶数
 
-
-
 ```java
 public class PrintOddEven {
     private static final Object lock = new Object();
