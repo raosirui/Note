@@ -808,6 +808,10 @@ public class CorsConfig implements WebMvcConfigurer {
     }
 ```
 
+
+
+
+
 ## 7、其他问题
 
 ### 7.1、其它权限校验方法
@@ -1026,4 +1030,366 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 ```
+
+
+
+
+
+## 8、网络安全的封装
+
+### **1. CSRF 保护（Cross-Site Request Forgery）**
+
+#### **🛡️ 作用**
+
+CSRF（跨站请求伪造）攻击是指 **攻击者诱骗用户在已认证的状态下执行恶意请求**，比如：
+
+- 你已登录某银行网站，攻击者在另一个网页上让你点击一个恶意链接，偷偷向银行发送转账请求。
+- 由于你的 Cookie 仍然有效，银行服务器会认为这个请求是合法的，从而造成损失。
+
+#### **⚙️ Spring Security 的实现**
+
+Spring Security **默认开启 CSRF 保护**，具体做法：
+
+1. **在表单提交时，要求附加 CSRF 令牌（token）。**
+2. **服务器验证 CSRF 令牌**，确保请求是合法的，避免伪造请求。
+
+#### **🛠️ 相关配置**
+
+#### **✅ 启用 CSRF（默认）**
+
+```java
+@EnableWebSecurity
+public class SecurityConfig {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.enable()) // 默认开启
+            .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+            .formLogin(withDefaults());
+        return http.build();
+    }
+}
+```
+
+#### **❌ 禁用 CSRF（适用于 REST API）**
+
+在 REST API 设计中，我们通常使用 **JWT 或 OAuth2** 进行身份验证，而不是 Session，因此可以 **禁用 CSRF**：
+
+```java
+http.csrf(csrf -> csrf.disable());
+```
+
+------
+
+### **2. XSS 防护（Cross-Site Scripting）**
+
+#### **🛡️ 作用**
+
+XSS（跨站脚本攻击）指的是 **攻击者在页面注入恶意脚本代码**，例如：
+
+- 在表单输入 `<script>alert('你被攻击了');</script>`，服务器直接返回，导致用户浏览器执行 JavaScript 代码。
+- 盗取用户 Cookie、会话信息，执行恶意操作。
+
+#### **⚙️ Spring Security 的实现**
+
+1. **默认对 HTML 内容进行编码**，防止恶意代码执行。
+2. **结合 Content-Security-Policy（CSP） 头**，限制脚本执行来源。
+
+#### **🛠️ 相关配置**
+
+#### **✅ 默认启用 XSS 防护**
+
+Spring Security 会自动对 **请求参数、表单输入** 进行编码：
+
+```java
+http.headers(headers -> headers
+    .contentSecurityPolicy(csp -> csp.policyDirectives("script-src 'self'"))
+);
+```
+
+**解释：**
+
+- `script-src 'self'` 只允许加载本站的 JS，防止外部恶意脚本注入。
+
+**❌ 关闭 XSS 保护（不推荐）**
+
+如果你需要关闭，可以使用：
+
+```java
+http.headers(headers -> headers.xssProtection(xss -> xss.disable()));
+```
+
+------
+
+### **3. CORS 保护（Cross-Origin Resource Sharing）**
+
+#### **🛡️ 作用**
+
+CORS（跨域资源共享）用于 **防止恶意网站请求你的 API**，例如：
+
+- 你的前端在 `http://example.com`
+- 你的后端在 `http://api.example.com`
+- 浏览器默认**不允许跨域请求**，Spring Security 需要允许前端访问 API。
+
+#### **⚙️ Spring Security 的实现**
+
+Spring Security **默认不允许跨域请求**，必须手动配置。
+
+#### **🛠️ 相关配置**
+
+#### **✅ 启用 CORS**
+
+```java
+@EnableWebSecurity
+public class SecurityConfig {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .cors(cors -> cors.configurationSource(request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOrigins(List.of("http://example.com")); // 允许的前端域名
+                config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE")); // 允许的请求方法
+                config.setAllowCredentials(true); // 允许携带 Cookie
+                return config;
+            }))
+            .csrf(csrf -> csrf.disable());
+        return http.build();
+    }
+}
+```
+
+------
+
+### **4. 会话管理（Session Management）**
+
+#### **🛡️ 作用**
+
+Spring Security 通过 **会话管理** 防止以下攻击：
+
+1. **会话固定攻击（Session Fixation Attack）**
+   - 让受害者使用攻击者指定的 Session ID，进而劫持会话。
+2. **并发会话控制（限制用户同时在线数）**
+3. **自动注销超时会话**
+
+#### **⚙️ Spring Security 的实现**
+
+- **默认在登录时创建新会话，防止会话固定攻击。**
+- **可以配置并发会话数量限制。**
+
+#### **🛠️ 相关配置**
+
+#### **✅ 防止会话固定攻击**
+
+```java
+http.sessionManagement(session -> session
+    .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession) // 登录后创建新 Session
+);
+```
+
+#### **✅ 限制用户同时在线**
+
+```java
+http.sessionManagement(session -> session
+    .maximumSessions(1) // 允许一个用户只能有一个活动会话
+    .expiredUrl("/session-expired.html") // 会话过期后跳转页面
+);
+```
+
+------
+
+### **5. 安全 HTTP 头（Security Headers）**
+
+#### **🛡️ 作用**
+
+Spring Security 默认提供了一些 **安全 HTTP 头**，增强浏览器端安全：
+
+- **HSTS（Strict-Transport-Security）**
+  - 强制浏览器使用 HTTPS，防止中间人攻击。
+- **X-Frame-Options**
+  - 防止 Clickjacking（点击劫持），默认 `DENY`。
+- **Content-Security-Policy（CSP）**
+  - 限制 JavaScript、CSS、图像的来源，防止 XSS 攻击。
+
+#### **⚙️ Spring Security 的实现**
+
+Spring Security **默认启用这些安全头**，但可以进行自定义配置。
+
+#### **🛠️ 相关配置**
+
+#### **✅ 配置 HSTS**
+
+```java
+http.headers(headers -> headers
+    .httpStrictTransportSecurity(hsts -> hsts.includeSubDomains(true).maxAgeInSeconds(31536000))
+);
+```
+
+#### **✅ 配置 X-Frame-Options**
+
+```java
+http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::deny));
+```
+
+- `DENY`（默认）：禁止 iframe 嵌入，防止 Clickjacking 攻击。
+- `SAMEORIGIN`：仅允许同源页面嵌入。
+
+#### **✅ 配置 CSP**
+
+```java
+http.headers(headers -> headers
+    .contentSecurityPolicy(csp -> csp.policyDirectives("script-src 'self'"))
+);
+```
+
+- 只允许本站脚本执行，防止 XSS。
+
+------
+
+### **总结**
+
+Spring Security 提供了 **默认的安全防护机制**，帮助开发者避免常见安全漏洞：
+
+| **安全机制**     | **作用**               | **Spring Security 处理方式**     |
+| ---------------- | ---------------------- | -------------------------------- |
+| **CSRF 保护**    | 防止跨站请求伪造       | 默认开启 CSRF 令牌               |
+| **XSS 防护**     | 防止恶意脚本执行       | 自动编码输出，支持 CSP           |
+| **CORS 保护**    | 允许受信任域访问 API   | 需手动配置 `http.cors()`         |
+| **会话管理**     | 防止会话固定、超时控制 | 默认创建新 Session，支持并发控制 |
+| **安全 HTTP 头** | 保护浏览器安全         | HSTS、X-Frame-Options、CSP       |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

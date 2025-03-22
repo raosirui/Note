@@ -1630,7 +1630,18 @@ ConcurrentHashMap 实现线程安全的关键点在于 put 流程。
 
 > 通过计算哈希值快速定位桶，在桶中查找目标节点，多个 key 值时链表遍历和红黑树查找。读操作是无锁的，依赖 volatile 保证线程可见性。
 
+
+
 如果**hash值小于 0**，说明是个特殊节点，会调用节点的 **find 方法**进行查找，比如说 ForwardingNode 的 find 方法或者 TreeNode 的 find 方法。
+
+**`ForwardingNode`** 和 **`TreeNode`** 是 `ConcurrentHashMap` 中的两种特殊节点类型。
+
+- **`ForwardingNode`** **转发节点**，在**扩容过程中**用于指示元素已迁移到新哈希表，`find()` 方法帮助跳转到新哈希表查找。
+- **`TreeNode`** 用于存储**红黑树**，处理大量哈希冲突的情况，`find()` 方法在树中查找元素。
+
+`hash < 0` 是一个特殊标记，指示当前节点是 `ForwardingNode` 或 `TreeNode`，需要通过相应的 `find()` 方法来查找元素。
+
+
 
 
 
@@ -1647,6 +1658,19 @@ ConcurrentHashMap 实现线程安全的关键点在于 put 流程。
 - 另外，ConcurrentHashMap 对节点 Node 做了进一步的封装，比如说用 Forwarding Node 来表示正在进行扩容的节点。
 
 - 最后就是 put 方法，通过 CAS + synchronized 来保证线程安全。
+
+
+
+#### ConcurrentHashMap 扩容机制
+
+与传统的 `HashMap` 类似，`ConcurrentHashMap` 也有 **扩容机制**，即当表的负载因子达到一定阈值时，哈希表会扩容。但在 `ConcurrentHashMap` 中，扩容过程是 **分段进行的**，即不**同段会并行进行扩容操作，而不会影响其他段的操作**。
+
+- 在扩容过程中，只会锁定当前正在扩容的段，其他段仍然可以并行地进行操作。
+- 这种分段扩容机制**能够避免全表扩容带来的性能瓶颈**。
+
+
+
+
 
 
 
