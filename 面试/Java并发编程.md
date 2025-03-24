@@ -1075,7 +1075,7 @@ Java 对象头里的 `Mark Word` 会记录锁的状态，一共有四种状态�
 
 [synchronized](https://javabetter.cn/thread/synchronized-1.html) 是一个关键字，[ReentrantLock](https://javabetter.cn/thread/reentrantLock.html)是 Lock 接口的一个实现。
 
-![image-20241217221224907](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202412172212073.png)
+<img src="https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202412172212073.png" alt="image-20241217221224907" style="zoom: 67%;" />
 
 它们都可以用来实现同步，但也有一些区别：
 
@@ -1155,7 +1155,28 @@ acquire 方法由 AQS（AbstractQueuedSynchronizer）提供，是整个锁机制
 
 
 
+
+
+
+
 ### :star:AQS 了解多少？
+
+如果面试官问你 **“了解 AQS 吗？”**，你可以这样回答：
+
+1. **AQS（`AbstractQueuedSynchronizer`）是 Java 并发工具的基础框架**，用于实现**锁（Lock）、信号量（Semaphore）、倒计时器（CountDownLatch）等同步器**。
+2. AQS 采用 **`volatile int state` 作为同步变量**，通过 **CAS + 自旋 + 等待队列（CLH 队列）** 处理并发控制。
+3. AQS 提供 **独占模式（如 `ReentrantLock`）和共享模式（如 `Semaphore`、`CountDownLatch`）**。
+4. AQS 主要通过 **`LockSupport.park()` 挂起线程，`unpark()` 唤醒线程**，提高并发效率。
+5. **实际应用**：
+   - `ReentrantLock`：独占锁，基于 AQS 实现可重入锁。
+   - `CountDownLatch`：倒计时器，`state == 0` 时唤醒所有等待线程。
+   - `Semaphore`：信号量，允许多个线程同时访问资源。
+
+💡 **加分项**：如果面试官深入问，可以提 AQS 的**公平锁/非公平锁**实现，或 AQS 在 `ReentrantReadWriteLock` 里的应用。
+
+
+
+
 
 AQS，也就是**抽象队列同步器**，由 Doug Lea 设计，是 Java 并发包`java.util.concurrent`的核心框架类，许多同步类的实现都依赖于它，如 ReentrantLock、Semaphore、CountDownLatch 等。
 

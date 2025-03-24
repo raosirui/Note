@@ -78,6 +78,13 @@ Spring 框架是分模块存在，除了最核心的`Spring Core Container`是�
 
 #### Web 开发方面有哪些注解呢？
 
+| **功能**                   | **作用**                                                     |
+| -------------------------- | ------------------------------------------------------------ |
+| `@SpringBootApplication`   | Spring Boot 入口类，包含 `@Configuration + @EnableAutoConfiguration + @ComponentScan` |
+| `@Configuration`           | 允许定义 `@Bean`                                             |
+| `@EnableAutoConfiguration` | **自动配置** Spring 组件                                     |
+| `@ComponentScan`           | **自动扫描** `@Component`、`@Service`、`@Repository`         |
+
 ①、`@Controller`：用于标注控制层组件。
 
 ②、`@RestController`：是`@Controller` 和 `@ResponseBody` 的结合体，返回 JSON 数据时使用。
@@ -823,7 +830,7 @@ AOP 是通过[动态代理](https://mp.weixin.qq.com/s/aZtfwik0weJN5JzYc-JxYg)�
 
 
 
-②、CGLIB 动态代理是**基于继承**的代理，可以代理没有实现接口的类。**只能单继承**
+②、CGLIB 动态代理是**基于继承**的代理，**可以代理没有实现接口的类**。**只能单继承**
 
 使用 CGLIB 动态代理时，Spring AOP 会生成目标类的子类，并在方法调用前后插入横切逻辑。
 
