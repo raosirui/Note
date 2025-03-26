@@ -286,6 +286,10 @@ foreach 的主要用在构建 in 条件中，它可以在 SQL 语句中进行迭
 
 ### 说说 Mybatis 的一级、二级缓存？
 
+MyBatis 的二级缓存是一个跨 SQLSession 级别的缓存，它可以提高查询效率，减少数据库访问次数。相较于一级缓存（**SQLSession 级别**），二级缓存是**Mapper 级别**的缓存，**多个 SQLSession 共享同一个缓存数据**。
+
+
+
 1. **一级缓存**: 基于 **PerpetualCache 的 HashMap 本地缓存**，其**存储作用域为 SqlSession**，各个 SqlSession 之间的缓存**相互隔离**，当 Session flush 或 close 之后，该 SqlSession 中的所有 Cache 就将清空，MyBatis **默认打开一级缓存。**
 
    [![Mybatis一级缓存](https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202412211027560.png)](https://camo.githubusercontent.com/2545fead6188dd6d758c0a1c296723a4f920b613a02b9d4103a215c47a98a29e/68747470733a2f2f63646e2e746f62656265747465726a61766165722e636f6d2f746f62656265747465726a61766165722f696d616765732f736964656261722f73616e66656e652f6d7962617469732d35346166623435382d376466632d346434382d396139302d3461643161383733393933372e706e67)
