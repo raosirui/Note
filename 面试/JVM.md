@@ -200,7 +200,18 @@ public class StaticVarDemo {
 
 ### 说一下 JDK 1.6、1.7、1.8 内存区域的变化？
 
+JDK 1.6 使用**永久代**来实现方法区：
 
+[<img src="https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202504010949466.png" alt="三分恶面渣逆袭：JDK 1.6内存区域" style="zoom:50%;" />](https://camo.githubusercontent.com/28d9107d566f27b84fc699802e8e5ab0f5ecd68aecf5604934bc76ff8bc146fb/68747470733a2f2f63646e2e746f62656265747465726a61766165722e636f6d2f746f62656265747465726a61766165722f696d616765732f736964656261722f73616e66656e652f6a766d2d362e706e67)
+
+JDK 1.7 时仍然是**永久代**，但发生了一些细微变化，比如**将字符串常量池、静态变量存放到了堆上**。
+
+[
+<img src="https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202504010953889.png" alt="三分恶面渣逆袭：JDK 1.7内存区域" style="zoom:50%;" />](https://camo.githubusercontent.com/7a5356ed6c1e2a783ef6772d6ae25adb309270058c68176b1843108deec3fcdc/68747470733a2f2f63646e2e746f62656265747465726a61766165722e636f6d2f746f62656265747465726a61766165722f696d616765732f736964656261722f73616e66656e652f6a766d2d372e706e67)
+
+在 JDK 1.8 时，直接在内存中划出了一块区域，叫**元空间**，来取代之前放在 JVM 内存中的永久代，并将运行时常量池、类常量池都移动到了元空间。
+
+[<img src="https://raw.githubusercontent.com/raosirui/Picture/main/markdown/202504010949888.png" alt="三分恶面渣逆袭：JDK 1.8内存区域" style="zoom:50%;" />](https://camo.githubusercontent.com/17d3744a3793af4cca94a3984f58d4697caf42b6231c63d3a0595457c39ac249/68747470733a2f2f63646e2e746f62656265747465726a61766165722e636f6d2f746f62656265747465726a61766165722f696d616765732f736964656261722f73616e66656e652f6a766d2d382e706e67)
 
 
 
